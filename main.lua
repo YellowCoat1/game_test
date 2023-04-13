@@ -89,7 +89,7 @@ function switchScene(scene)
     screenManager.switch(scene)
 end
 
-function resetPlayer() 
+function resetPlayer()
     player.collider:setPosition(100,100)
     player.x, player.y = 100, 100
 end
@@ -111,4 +111,24 @@ function checkIfPointInBox(px, py, bx, by, bw, bh)
     else
         return false
     end
+end
+
+function checkIfTwoBoxesIntersecting(x1, y1, w1, h1, x2, y2, w2, h2)
+    local first_left = x1
+    local first_right = x1 + w1
+    local first_top = y1
+    local first_bottom = y1 + h1
+
+    local second_left = x2
+    local second_right = x2 + w2
+    local second_top = y2
+    local second_bottom = y2 + h2
+
+    if  first_right > second_left
+    and first_left < second_right
+    and first_bottom > second_top
+    and first_top < second_bottom then
+        return true
+    else
+        return false
 end

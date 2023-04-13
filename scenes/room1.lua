@@ -8,19 +8,18 @@ function MainScreen.new()
     local boundMap = sti("map/room1/room1.lua")
     local map = cartographer.load("map/room1/room1.lua")
 
-    local debugTimer = 0
-    local checkedObjectPoint = {0, 0}
+    local debugTimer = {}
 
-    -- local objects = {}
-    -- table.insert(objects, {x = (16*3), y = 0, w = 0, h = 0, action = switch, arguments = {"room2"}})
+    local objects = {}
+    table.insert(objects, {x = (16*4), y = (32*3), w = 32, h = 32, action = switch, arguments = {"room2"}})
 
-    -- local function objectCheck(x, y)
-    --     for i, obj in pairs(objects) do
-    --         if checkIfPointInBox(x, y, obj.x, obj.y, obj.w, obj.h) then
-    --             obj.action(unpack(obj.arguments))
-    --         end
-    --     end
-    -- end
+    local function objectCheck(x, y, w, h)
+        for i, obj in pairs(objects) do
+            if checkIfTwoBoxesIntersecting(x, y, w, h obj.x, obj.y, obj.w, obj.h) then
+                obj.action(unpack(obj.arguments))
+            end
+        end
+    end
 
     function switch(room)
         screenManager.publish("exit")
@@ -43,13 +42,13 @@ function MainScreen.new()
         world:update(dt)
         boundMap:update(dt)
 
-        -- if debugTimer > 0 then
-        --     debugTimer = debugTimer - dt
-        -- end
+        if debugTimer.t > 0 then
+            debugTimer.t = debugTimer.t - dt
+        end
     end
 
     function self:draw()
-        
+
         love.graphics.setBackgroundColor(0,0,0,1)
         cam:attach()
             map:draw()
@@ -57,21 +56,19 @@ function MainScreen.new()
 
             love.graphics.rectangle("line", 32*3, 32*2, 32, 32)
 
-            -- if debugTimer > 0 then
-            --     love.graphics.rectangle(checkedObjectPoint[1]-1.5, checkedObjectPoint[2]-1.5, 3, 3)
-            -- end
+            if debugTimer.t > 0 then
+                love.graphics.rectangle(debugTimer.x, debugTimer.y, 32, 32)
+            end
         cam:detach()
     end
 
     function self:receive(message)
         if message == "exit" then
-            -- destroy bounds
+
             for i, bound in pairs(bounds) do
                 bound:destroy()
             end
 
-            -- reset player rotation
-            player.rotation = 0
         end
     end
 
@@ -79,15 +76,19 @@ function MainScreen.new()
         if key == "escape" then
             menuToggle()
         end
-        -- if key == "e" then
-        --     print("check")
-        --     local x, y = player.x, player.y
-        --     local xFace = math.abs((player.rotation-1 % 4) - 2) - 1
-        --     local yFace = math.abs((player.rotation % 4) - 2) - 1
-        --     checkedObjectPoint = {x + (xFace * 10), y + (yFace * 10)}
-        --     objectCheck(x + (xFace * 10), y + (yFace * 10))
-        --     debugTimer = 1
-        -- end
+        if key == "e" then
+            print("check")
+            local x, y = player.x, player.y
+            local xFace = math.abs((player.rotation-1 % 4) - 2) - 1
+            local yFace = math.abs((player.rotation % 4) - 2) - 1
+
+            local checkXPosition = x+(xFace*32)
+            local checkYPosition = y+(yFace*32)
+            objectCheck(checkXPosition, checkYPosition, 32, 32)
+
+            debugTimer.x = checkXPosition
+            debugTimer.t = 1
+        end
     end
 
     return self
