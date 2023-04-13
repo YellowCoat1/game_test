@@ -1,0 +1,55 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "room1/room1.tmx",
+    "expandedProjectPaths": [
+        ".",
+        "room1"
+    ],
+    "fileStates": {
+        "room1/room1.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 109.66666666666666,
+                "y": 176
+            }
+        },
+        "room1/room1.tmx#dungeon_sheet": {
+            "scaleInDock": 1
+        },
+        "room2/room2.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 133,
+                "y": 118.66666666666664
+            }
+        },
+        "room2/room2.tmx#dungeon_sheet": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/jason/Documents/LOVE/examples/scene_manager/tilemap/map/room1",
+    "last.imagePath": "C:/Users/jason/Documents/LOVE/examples/scene_manager/tilemap/map",
+    "map.lastUsedExportFilter": "Lua files (*.lua)",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "room1/room1.tmx",
+        "room2/room2.tmx"
+    ],
+    "project": "untitled.tiled-project",
+    "recentFiles": [
+        "room2/room2.tmx",
+        "room1/room1.tmx"
+    ],
+    "tileset.embedInMap": true
+}
