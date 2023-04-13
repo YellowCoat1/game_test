@@ -8,15 +8,15 @@ function MainScreen.new()
     local boundMap = sti("map/room1/room1.lua")
     local map = cartographer.load("map/room1/room1.lua")
 
-    local debugTimer = {}
+    local debugTimer = {t = 0, x = 0, y = 0}
 
     local objects = {}
-    table.insert(objects, {x = (16*4), y = (32*3), w = 32, h = 32, action = switch, arguments = {"room2"}})
+    table.insert(objects, {x = (16*4), y = (32*3), w = 32, h = 32, action = switchRoom, arguments = {"room2"}})
 
     local function objectCheck(x, y, w, h)
         for i, obj in pairs(objects) do
-            if checkIfTwoBoxesIntersecting(x, y, w, h obj.x, obj.y, obj.w, obj.h) then
-                obj.action(unpack(obj.arguments))
+            if checkIfTwoBoxesIntersecting(x, y, w, h, obj.x, obj.y, obj.w, obj.h) then
+                --obj.action(unpack(obj.arguments))
             end
         end
     end
@@ -54,12 +54,12 @@ function MainScreen.new()
             map:draw()
             love.graphics.draw(player.image, player.x, player.y, -(player.rotation * math.pi)/2, 1, 1, player.w/2, player.h/2)
 
-            for i,val in ipairs(objects) end
+            for i,val in ipairs(objects) do
                 love.graphics.rectangle("line", val.x, val.y, val.w, val.h)
             end
 
             if debugTimer.t > 0 then
-                love.graphics.rectangle(debugTimer.x, debugTimer.y, 32, 32)
+                love.graphics.rectangle("line", debugTimer.x, debugTimer.y, 32, 32)
             end
         cam:detach()
     end

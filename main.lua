@@ -83,7 +83,7 @@ function love.keypressed(key)
     end
 end
 
-function switchScene(scene)
+function switchRoom(scene)
     resetPlayer()
     screenManager.publish("exit")
     screenManager.switch(scene)
@@ -131,4 +131,5 @@ function checkIfTwoBoxesIntersecting(x1, y1, w1, h1, x2, y2, w2, h2)
         return true
     else
         return false
+    end
 end
