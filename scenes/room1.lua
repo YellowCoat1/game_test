@@ -54,7 +54,9 @@ function MainScreen.new()
             map:draw()
             love.graphics.draw(player.image, player.x, player.y, -(player.rotation * math.pi)/2, 1, 1, player.w/2, player.h/2)
 
-            love.graphics.rectangle("line", 32*3, 32*2, 32, 32)
+            for i,val in ipairs(objects) end
+                love.graphics.rectangle("line", val.x, val.y, val.w, val.h)
+            end
 
             if debugTimer.t > 0 then
                 love.graphics.rectangle(debugTimer.x, debugTimer.y, 32, 32)
