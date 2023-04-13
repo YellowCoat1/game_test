@@ -11,16 +11,16 @@ function MainScreen.new()
     local debugTimer = 0
     local checkedObjectPoint = {0, 0}
 
-    local objects = {}
-    table.insert(objects, {x = (16*3), y = 0, w = 0, h = 0, action = switch, arguments = {"room2"}})
+    -- local objects = {}
+    -- table.insert(objects, {x = (16*3), y = 0, w = 0, h = 0, action = switch, arguments = {"room2"}})
 
-    local function objectCheck(x, y)
-        for i, obj in pairs(objects) do
-            if checkIfPointInBox(x, y, obj.x, obj.y, obj.w, obj.h) then
-                obj.action(unpack(obj.arguments))
-            end
-        end
-    end
+    -- local function objectCheck(x, y)
+    --     for i, obj in pairs(objects) do
+    --         if checkIfPointInBox(x, y, obj.x, obj.y, obj.w, obj.h) then
+    --             obj.action(unpack(obj.arguments))
+    --         end
+    --     end
+    -- end
 
     function switch(room)
         screenManager.publish("exit")
@@ -43,9 +43,9 @@ function MainScreen.new()
         world:update(dt)
         boundMap:update(dt)
 
-        if debugTimer > 0 then
-            debugTimer = debugTimer - dt
-        end
+        -- if debugTimer > 0 then
+        --     debugTimer = debugTimer - dt
+        -- end
     end
 
     function self:draw()
@@ -57,9 +57,9 @@ function MainScreen.new()
 
             love.graphics.rectangle("line", 32*3, 32*2, 32, 32)
 
-            if debugTimer > 0 then
-                love.graphics.rectangle(checkedObjectPoint[1]-1.5, checkedObjectPoint[2]-1.5, 3, 3)
-            end
+            -- if debugTimer > 0 then
+            --     love.graphics.rectangle(checkedObjectPoint[1]-1.5, checkedObjectPoint[2]-1.5, 3, 3)
+            -- end
         cam:detach()
     end
 
@@ -79,15 +79,15 @@ function MainScreen.new()
         if key == "escape" then
             menuToggle()
         end
-        if key == "e" then
-            print("check")
-            local x, y = player.x, player.y
-            local xFace = math.abs((player.rotation-1 % 4) - 2) - 1
-            local yFace = math.abs((player.rotation % 4) - 2) - 1
-            checkedObjectPoint = {x + (xFace * 10), y + (yFace * 10)}
-            objectCheck(x + (xFace * 10), y + (yFace * 10))
-            debugTimer = 1
-        end
+        -- if key == "e" then
+        --     print("check")
+        --     local x, y = player.x, player.y
+        --     local xFace = math.abs((player.rotation-1 % 4) - 2) - 1
+        --     local yFace = math.abs((player.rotation % 4) - 2) - 1
+        --     checkedObjectPoint = {x + (xFace * 10), y + (yFace * 10)}
+        --     objectCheck(x + (xFace * 10), y + (yFace * 10))
+        --     debugTimer = 1
+        -- end
     end
 
     return self

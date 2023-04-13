@@ -45,10 +45,6 @@ function mainMenu.new()
         end
     end
 
-    function self:keypressed(key)
-        print(inspect(key))
-    end
-
     return self
 end
 
