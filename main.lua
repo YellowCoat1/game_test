@@ -84,10 +84,11 @@ function love.keypressed(key)
     end
 end
 
-function switchRoom(scene)
+function switchRoom(scene, ...)
+    args = (...)
     resetPlayer()
     screenManager.publish("exit")
-    screenManager.switch(scene)
+    screenManager.switch(scene, args)
 end
 
 function resetPlayer()

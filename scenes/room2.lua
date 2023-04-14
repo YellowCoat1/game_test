@@ -11,7 +11,7 @@ function MainScreen.new()
     local debugTimer = {t = 0, x = 0, y = 0}
 
     local objects = {}
-    table.insert(objects, {x = (32*3), y = (32*5) + 16, w = 32, h = 16, action = switchRoom, arguments = {"room1"}})
+    table.insert(objects, {x = (32*3), y = (32*5) + 16, w = 32, h = 16, action = switchRoom, arguments = {"room1", "door1"}})
 
     local function objectCheck(x, y, w, h)
         for i, obj in pairs(objects) do
@@ -21,12 +21,19 @@ function MainScreen.new()
         end
     end
 
-    function switch(room)
-        screenManager.publish("exit")
-        screenManager.switch(room)
+    function self:init(startPos)
+        if startPos then
+            if startPos == "door1" then
+                player.collider:setPosition(32*3 + player.w/2, 32*4 + player.h/2)
+                player.x, player.y = 32*2 + player.w/2, 32*2
+                player.rotation = 0
+            end
+        else
+            player.collider:setPosition(100,100)
+            player.x, player.y = 100,100
+            player.rotation = 0
+        end
     end
-
-    player.rotation = 0
 
     local bounds = {}
     if boundMap.layers["bounds"] then
@@ -54,13 +61,13 @@ function MainScreen.new()
             map:draw()
             love.graphics.draw(player.image, player.x, player.y, -(player.rotation * math.pi)/2, 1, 1, player.w/2, player.h/2)
 
-            for i,val in ipairs(objects) do
-                love.graphics.rectangle("line", val.x, val.y, val.w, val.h)
-            end
+            -- for i,val in ipairs(objects) do
+            --     love.graphics.rectangle("line", val.x, val.y, val.w, val.h)
+            -- end
 
-            if debugTimer.t > 0 then
-                love.graphics.rectangle("line", debugTimer.x, debugTimer.y, 32, 32)
-            end
+            -- if debugTimer.t > 0 then
+            --     love.graphics.rectangle("line", debugTimer.x, debugTimer.y, 32, 32)
+            -- end
         cam:detach()
     end
 
