@@ -8,6 +8,8 @@ function MainScreen.new()
     local boundMap = sti("map/room1/room1.lua")
     local map = cartographer.load("map/room1/room1.lua")
 
+    player.image:setFilter("linear")
+
     local debugTimer = {t = 0, x = 0, y = 0}
 
     local objects = {}

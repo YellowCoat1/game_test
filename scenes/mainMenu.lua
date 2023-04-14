@@ -5,6 +5,8 @@ local mainMenu = {}
 function mainMenu.new()
     local self = Screen.new()
 
+    player.image:setFilter("nearest")
+
     function self:update(dt)
 
     end
