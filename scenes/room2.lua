@@ -11,7 +11,7 @@ function MainScreen.new()
     local debugTimer = {t = 0, x = 0, y = 0}
 
     local objects = {}
-    table.insert(objects, {x = (32*3), y = (32*5), w = 32, h = 32, action = switchRoom, arguments = {"room1"}})
+    table.insert(objects, {x = (32*3), y = (32*5) + 16, w = 32, h = 16, action = switchRoom, arguments = {"room1"}})
 
     local function objectCheck(x, y, w, h)
         for i, obj in pairs(objects) do
