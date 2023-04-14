@@ -81,7 +81,7 @@ function MainScreen.new()
         if key == "e" then
             print("check")
             local x, y = player.x, player.y
-            local xFace = math.abs((player.rotation-1 % 4) - 2) - 1
+            local xFace = math.abs(math.abs((player.rotation-1 % 4)) - 2) - 1
             local yFace = math.abs((player.rotation % 4) - 2) - 1
 
             local checkXPosition = x+(xFace*32)
