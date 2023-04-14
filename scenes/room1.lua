@@ -16,7 +16,7 @@ function MainScreen.new()
     local function objectCheck(x, y, w, h)
         for i, obj in pairs(objects) do
             if checkIfTwoBoxesIntersecting(x, y, w, h, obj.x, obj.y, obj.w, obj.h) then
-                --obj.action(unpack(obj.arguments))
+                obj.action(unpack(obj.arguments))
             end
         end
     end
@@ -90,7 +90,7 @@ function MainScreen.new()
 
             debugTimer.x = checkXPosition
             debugTimer.y = checkYPosition
-            
+
             debugTimer.t = 1
         end
     end
