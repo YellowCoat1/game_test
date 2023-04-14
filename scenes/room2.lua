@@ -5,13 +5,13 @@ local MainScreen = {}
 function MainScreen.new()
     local self = Screen.new()
 
-    local boundMap = sti("map/room1/room1.lua")
-    local map = cartographer.load("map/room1/room1.lua")
+    local boundMap = sti("map/room2/room2.lua")
+    local map = cartographer.load("map/room2/room2.lua")
 
     local debugTimer = {t = 0, x = 0, y = 0}
 
     local objects = {}
-    table.insert(objects, {x = (32*4), y = (32*2), w = 32, h = 32, action = switchRoom, arguments = {"room2"}})
+    table.insert(objects, {x = (32*3), y = (32*5), w = 32, h = 32, action = switchRoom, arguments = {"room1"}})
 
     local function objectCheck(x, y, w, h)
         for i, obj in pairs(objects) do

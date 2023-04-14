@@ -10,6 +10,7 @@ function love.load()
     screens = {
         mainMenu = require "scenes.mainMenu",
         room1 = require "scenes.room1",
+        room2 = require "scenes.room2",
         menu = require "scenes.menu"
     }
 
