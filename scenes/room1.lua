@@ -11,7 +11,7 @@ function MainScreen.new()
     local debugTimer = {t = 0, x = 0, y = 0}
 
     local objects = {}
-    table.insert(objects, {x = (16*4), y = (32*3), w = 32, h = 32, action = switchRoom, arguments = {"room2"}})
+    table.insert(objects, {x = (16*4), y = (32*3), w = 32, h = 32, action = print, arguments = {"action"}})
 
     local function objectCheck(x, y, w, h)
         for i, obj in pairs(objects) do
@@ -79,19 +79,18 @@ function MainScreen.new()
             menuToggle()
         end
         if key == "e" then
-            print("check")
             local x, y = player.x, player.y
-            local xFace = math.abs(math.abs((player.rotation-1 % 4)) - 2) - 1
-            local yFace = math.abs((player.rotation % 4) - 2) - 1
+            local xFace = -(math.abs(math.abs((player.rotation-1 % 4)) - 2) - 1)
+            local yFace = -(math.abs((player.rotation % 4) - 2) - 1)
 
-            local checkXPosition = x+(xFace*32)
-            local checkYPosition = y+(yFace*32)
+            local checkXPosition = (player.x - player.w/2)+(xFace*32)
+            local checkYPosition = (player.y - player.h/2)+(yFace*32)
 
-            print(checkXPosition, checkYPosition)
             objectCheck(checkXPosition, checkYPosition, 32, 32)
 
             debugTimer.x = checkXPosition
             debugTimer.y = checkYPosition
+            
             debugTimer.t = 1
         end
     end
