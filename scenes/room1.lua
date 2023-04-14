@@ -86,9 +86,12 @@ function MainScreen.new()
 
             local checkXPosition = x+(xFace*32)
             local checkYPosition = y+(yFace*32)
+
+            print(checkXPosition, checkYPosition)
             objectCheck(checkXPosition, checkYPosition, 32, 32)
 
             debugTimer.x = checkXPosition
+            debugTimer.y = checkYPosition
             debugTimer.t = 1
         end
     end
