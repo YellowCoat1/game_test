@@ -1,25 +1,21 @@
 screenManager = require "lib.ScreenManager"
 sti = require "lib.sti"
 windfield = require "lib.windfield"
-camera = require "lib.camera"
-cartographer = require "lib.cartographer"
 inspect = require "lib.inspect"
 
 function love.load()
 
     screens = {
         mainMenu = require "scenes.mainMenu",
+        roomManager = require "scenes.roomManager",
         room1 = require "scenes.room1",
         room2 = require "scenes.room2",
         menu = require "scenes.menu"
     }
 
-    --cam = camera()
-    --cam:zoom(2)
 
     world = windfield.newWorld(0,0)
 
-    -- please don't change. theoretically works, but many unexpected things can happen.
     worldScale = 2
 
     player = {}
@@ -41,6 +37,7 @@ function love.load()
 end
 
 function love.update(dt)
+    world:update(dt)
     screenManager.update(dt)
     local vx = 0
     local vy = 0
@@ -88,9 +85,8 @@ function love.keypressed(key)
     end
 end
 
-function switchRoom(scene, ...)
-    args = (...)
-    resetPlayer()
+function switchScene(scene, ...)
+    local args = (...)
     screenManager.publish("exit")
     screenManager.switch(scene, args)
 end
