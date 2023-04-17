@@ -6,7 +6,7 @@ function MainScreen.new()
     local self = Screen.new()
 
     local boundMap = sti("map/room2/room2.lua")
-    local map = cartographer.load("map/room2/room2.lua")
+    local map = sti("map/room2/room2.lua")
 
     local debugTimer = {t = 0, x = 0, y = 0}
 
@@ -24,7 +24,7 @@ function MainScreen.new()
     function self:init(startPos)
         if startPos then
             if startPos == "door1" then
-                player.collider:setPosition(32*3 + player.w/2, 32*4 + player.h/2)
+                player.collider:setPosition(32*3*worldScale + player.w*worldScale/2, 32*4*worldScale + player.h*worldScale/2)
                 player.x, player.y = 32*2 + player.w/2, 32*2
                 player.rotation = 0
             end
@@ -38,7 +38,7 @@ function MainScreen.new()
     local bounds = {}
     if boundMap.layers["bounds"] then
         for i, obj in pairs(boundMap.layers["bounds"].objects) do
-            local bound = world:newRectangleCollider(obj.x,obj.y,obj.width,obj.height)
+            local bound = world:newRectangleCollider(obj.x*worldScale,obj.y*worldScale,obj.width*worldScale,obj.height*worldScale)
             bound:setType("static")
             table.insert(bounds, bound)
         end
@@ -57,19 +57,37 @@ function MainScreen.new()
     function self:draw()
 
         love.graphics.setBackgroundColor(0,0,0,1)
-        cam:attach()
-            map:draw()
-            love.graphics.draw(player.image, player.x, player.y, -(player.rotation * math.pi)/2, 1, 1, player.w/2, player.h/2)
+        love.graphics.push()
 
-            -- for i,val in ipairs(objects) do
-            --     love.graphics.rectangle("line", val.x, val.y, val.w, val.h)
-            -- end
+        -- scale up
+        love.graphics.scale(worldScale,worldScale)
 
-            -- if debugTimer.t > 0 then
-            --     love.graphics.rectangle("line", debugTimer.x, debugTimer.y, 32, 32)
-            -- end
-        cam:detach()
-    end
+        -- translate so it's centered on the player
+        local mapTranslateX = love.graphics.getWidth()/(worldScale*2) - player.x/worldScale
+        local mapTranslateY = love.graphics.getHeight()/(worldScale*2) - player.y/worldScale
+        local roundTo = 1
+        love.graphics.translate(round(mapTranslateX, roundTo), round(mapTranslateY, roundTo))
+
+        -- draw the map
+        map:drawLayer(map.layers["floors"])
+        map:drawLayer(map.layers["walls"])
+       
+        for i,val in ipairs(objects) do
+            love.graphics.rectangle("line", val.x, val.y, val.w, val.h)
+        end
+
+        if debugTimer.t > 0 then
+            love.graphics.rectangle("line", debugTimer.x, debugTimer.y, 32, 32)
+        end
+
+        -- reset map translation
+        love.graphics.translate(-mapTranslateX,-mapTranslateY)
+
+        --draw the player
+        love.graphics.draw(player.image, love.graphics.getWidth()/(worldScale*2), love.graphics.getHeight()/(worldScale*2), -(player.rotation * math.pi)/2, 1, 1, player.w/2, player.h/2)
+
+        love.graphics.pop()
+end
 
     function self:receive(message)
         if message == "exit" then
@@ -87,11 +105,12 @@ function MainScreen.new()
         end
         if key == "e" then
             local x, y = player.x, player.y
+            -- local playerRotation = -(player.rotation * math.pi)/2
             local xFace = -(math.abs(math.abs((player.rotation-1 % 4)) - 2) - 1)
             local yFace = -(math.abs((player.rotation % 4) - 2) - 1)
 
-            local checkXPosition = (player.x - player.w/2)+(xFace*32)
-            local checkYPosition = (player.y - player.h/2)+(yFace*32)
+            local checkXPosition = (player.x/worldScale - player.w/2)+(xFace*32)
+            local checkYPosition = (player.y/worldScale - player.h/2)+(yFace*32)
 
             objectCheck(checkXPosition, checkYPosition, 32, 32)
 

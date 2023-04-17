@@ -14,10 +14,13 @@ function love.load()
         menu = require "scenes.menu"
     }
 
-    cam = camera()
-    cam:zoom(2)
+    --cam = camera()
+    --cam:zoom(2)
 
     world = windfield.newWorld(0,0)
+
+    -- please don't change. theoretically works, but many unexpected things can happen.
+    worldScale = 2
 
     player = {}
     player.x = 100
@@ -25,10 +28,11 @@ function love.load()
     player.image = love.graphics.newImage("player.png")
     player.w = player.image:getWidth()
     player.h = player.image:getHeight()
-    player.collider = world:newRectangleCollider(150,100,player.w,player.h)
+    player.collider = world:newRectangleCollider(150,100,player.w*worldScale,player.h*worldScale)
     player.collider:setFixedRotation(true)
-
     player.rotation = 0
+
+    
 
     inMenu = false
     screenManager.init(screens, "mainMenu")
@@ -43,19 +47,19 @@ function love.update(dt)
 
     if not inMenu then
         if love.keyboard.isDown("right") then
-            vx = 100
+            vx = 100*worldScale
             player.rotation = 3
         end
         if love.keyboard.isDown("left") then
-            vx = -100
+            vx = -100*worldScale
             player.rotation = 1
         end
         if love.keyboard.isDown("up") then
-            vy = -100
+            vy = -100*worldScale
             player.rotation = 0
         end
         if love.keyboard.isDown("down") then
-            vy = 100
+            vy = 100*worldScale
             player.rotation = 2
         end
     end
@@ -63,7 +67,7 @@ function love.update(dt)
     local s = 1
     player.collider:setLinearVelocity(vx*s, vy*s)
 
-    cam:lookAt(player.x, player.y)
+    --cam:lookAt(player.x, player.y)
     player.x = player.collider:getX()
     player.y = player.collider:getY()
 end
@@ -134,4 +138,11 @@ function checkIfTwoBoxesIntersecting(x1, y1, w1, h1, x2, y2, w2, h2)
     else
         return false
     end
+end
+
+function round(input, place)
+    local inputTimes10ToThePowerOfPlace = input * (10^place)
+    local rounded = math.floor(inputTimes10ToThePowerOfPlace + .5)
+    local dividedBy10ToThePowerOfPlace = rounded / (10^place)
+    return(dividedBy10ToThePowerOfPlace)
 end

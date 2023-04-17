@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="5">
  <editorsettings>
-  <export target="../../../scene_manager/tilemap/map/room1/room1.lua" format="lua"/>
+  <export target="room1.lua" format="lua"/>
  </editorsettings>
  <tileset firstgid="1" name="dungeon_sheet" tilewidth="32" tileheight="32" tilecount="240" columns="24">
   <image source="../dungeon_sheet.png" width="768" height="320"/>
