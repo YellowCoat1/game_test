@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="6">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="7">
  <tileset firstgid="1" name="dungeon_sheet" tilewidth="32" tileheight="32" tilecount="240" columns="24">
   <image source="../dungeon_sheet.png" width="768" height="320"/>
  </tileset>
@@ -27,6 +27,16 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="4" name="interactables">
+  <object id="6" name="door1" type="door" x="96" y="176" width="32" height="16">
+   <properties>
+    <property name="doorID" type="int" value="1"/>
+    <property name="enterDir" type="int" value="0"/>
+    <property name="roomExit" value="room1"/>
+    <property name="roomExitDoorID" type="int" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
  <layer id="1" name="walls" width="30" height="20">
   <data encoding="csv">
 6,193,194,195,196,197,198,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
