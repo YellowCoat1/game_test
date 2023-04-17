@@ -59,6 +59,12 @@ function RoomManager.new()
     end
 
     function self:update(dt)
+        
+        if map and boundMap then
+            map:update(dt)
+            boundMap:update(dt)
+        end
+
         if debugTimer.t > 0 then
             debugTimer.t = debugTimer.t - dt
         end
@@ -90,7 +96,6 @@ function RoomManager.new()
     function switchRoom(room, ...)
         local args = (...)
         objects = {}
-        print("destroy")
         for i, bound in pairs(bounds) do
             bound:destroy()
         end
@@ -106,6 +111,9 @@ function RoomManager.new()
             for i, bound in pairs(bounds) do
                 bound:destroy()
             end
+            boundMap = nil
+            map = nil
+            debugTimer.t = 0
         end
 
         if message == "exit" then

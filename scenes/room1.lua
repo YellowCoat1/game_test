@@ -19,16 +19,6 @@ function MainScreen.new()
         end
     end
 
-    -- enterPlaces = {}
-
-    -- if boundMap.layers["enter"] then
-    --     for _,enterPos in pairs(boundMap.layers["enterPlaces"].objects) do
-    --         local enterPosX = enterPos.x + (enterPos.width/2)
-    --         local enterPosY = enterPos.y + (enterPos.height/2)
-    --         table.insert(enterPlaces, {x = enterPosX, y = enterPosY, place = })
-    --     end
-    -- end
-
     function self:init(startPos)
         if startPos then
             if startPos == "door1" then
@@ -41,11 +31,6 @@ function MainScreen.new()
             player.x, player.y = 100*worldScale,100*worldScale
             player.rotation = 0
         end
-    end
-
-    function self:update(dt)
-        map:update(dt)
-        boundMap:update(dt)
     end
 
     function self:keypressed(key)
