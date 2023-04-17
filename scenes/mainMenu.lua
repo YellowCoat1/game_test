@@ -5,6 +5,7 @@ local mainMenu = {}
 function mainMenu.new()
     local self = Screen.new()
 
+    love.graphics.setBackgroundColor(0,153/255,33/255)
     player.image:setFilter("nearest")
 
     function self:update(dt)
@@ -21,7 +22,7 @@ function mainMenu.new()
         local h = love.graphics.getHeight()
         love.graphics.push()
 
-        love.graphics.setBackgroundColor(0,153/255,33/255)
+        
         love.graphics.setColor(69/255,69/255,69/255)
 
         rect(w*(1/16),h*(1/16),w*(1/4),h*(1/16))
