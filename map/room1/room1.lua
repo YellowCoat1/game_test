@@ -9,8 +9,8 @@ return {
   height = 20,
   tilewidth = 32,
   tileheight = 32,
-  nextlayerid = 5,
-  nextobjectid = 8,
+  nextlayerid = 6,
+  nextobjectid = 17,
   properties = {},
   tilesets = {
     {
@@ -195,8 +195,54 @@ return {
     {
       type = "objectgroup",
       draworder = "topdown",
+      id = 5,
+      name = "entrances",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 15,
+          name = "door1",
+          type = "",
+          shape = "rectangle",
+          x = 80,
+          y = 72,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["playerEnterRotation"] = 2
+          }
+        },
+        {
+          id = 16,
+          name = "standardEnter",
+          type = "",
+          shape = "rectangle",
+          x = 112,
+          y = 112,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["playerEnterRotation"] = 0
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
       id = 4,
-      name = "interactables",
+      name = "doors",
       class = "",
       visible = true,
       opacity = 1,
@@ -209,7 +255,7 @@ return {
         {
           id = 5,
           name = "door1",
-          type = "door",
+          type = "",
           shape = "rectangle",
           x = 64,
           y = 32,
@@ -218,7 +264,6 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["enterDir"] = 3,
             ["roomExit"] = "room2",
             ["roomExitDoorName"] = "door1"
           }

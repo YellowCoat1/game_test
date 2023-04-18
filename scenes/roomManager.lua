@@ -10,6 +10,7 @@ function RoomManager.new()
     debugTimer = {t = 0, x = 0, y = 0}
 
     objects = {}
+    entrances = {}
 
     function self:draw()
 
@@ -124,6 +125,8 @@ function RoomManager.new()
     function switchRoom(room, ...)
         local args = (...)
         objects = {}
+        entrances = {}
+
         for i, bound in pairs(bounds) do
             bound:destroy()
         end
@@ -141,6 +144,7 @@ function RoomManager.new()
             end
             map = nil
             objects = {}
+            entrances = {}
             debugTimer.t = 0
         end
 
@@ -155,19 +159,24 @@ function RoomManager.new()
             end
 
 
-            if map.layers["interactables"] then
-
-                for _,obj in pairs(map.layers["interactables"].objects) do
-
-                    if obj.type == "door" then
-                        print(obj.x)
-                        table.insert(objects, {x = obj.x, y = obj.y, w = obj.width, h = obj.height, action = switchRoom, arguments = {obj.properties.roomExit, obj.properties.roomExitDoorName}})
-                        --table.insert(objects, {x = (32*3), y = (32*5) + 16, w = 32, h = 16, action = switchRoom, arguments = {"room1", "door1"}})
-                    end
-
+            if map.layers["doors"] then
+                for _,obj in pairs(map.layers["doors"].objects) do
+                    table.insert(objects, {x = obj.x, y = obj.y, w = obj.width, h = obj.height, action = switchRoom, arguments = {obj.properties.roomExit, obj.properties.roomExitDoorName}})
                 end
             end
+
+            if map.layers["entrances"] then 
+                print("testA\n")
+                for _,obj in pairs(map.layers["entrances"].objects) do
+                    print("testB " .. obj.name .."\n")
+                    local entranceRotation = obj.properties.playerEnterRotation or 0
+                    if obj.name == "standardEnter" then print("test") end
+                    table.insert(entrances, {x = obj.x*worldScale, y = obj.y*worldScale, rotation = entranceRotation, name = obj.name})
+                end
+            end
+
         end
+
     end
 
     return self

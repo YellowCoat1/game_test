@@ -10,16 +10,14 @@ function MainScreen.new()
     screenManager.publish("room_enter")
 
     function self:init(startPos)
-        if startPos then
-            if startPos == "door1" then
-                player.collider:setPosition(32*3*worldScale + player.w*worldScale/2, 32*4*worldScale + player.h*worldScale/2)
-                player.x, player.y = 32*2 + player.w/2, 32*2
-                player.rotation = 0
+    
+        startPos = startPos or "standardEnter"
+        for i,entrance in ipairs(entrances) do
+            if entrance.name == startPos then
+                player.collider:setPosition(entrance.x, entrance.y)
+                player.x, player.y = entrance.x, entrance.y
+                player.rotation = entrance.rotation
             end
-        else
-            player.collider:setPosition(100,100)
-            player.x, player.y = 100,100
-            player.rotation = 0
         end
     end
 
