@@ -13,7 +13,9 @@ function love.load()
         menu = require "scenes.menu"
     }
 
+    debug = false
 
+    
     world = windfield.newWorld(0,0)
 
     worldScale = 2
