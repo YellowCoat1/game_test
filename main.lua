@@ -17,6 +17,8 @@ function love.load()
     
     world = windfield.newWorld(0,0)
 
+    scenePaused = false
+
     worldScale = 2
 
     player = {}
@@ -69,9 +71,11 @@ function menuToggle()
     if not inMenu then
         screenManager.push("menu")
         inMenu = true
+        scenePaused = true
     else
         screenManager.pop()
         inMenu = false
+        scenePaused = false
     end
 
 end

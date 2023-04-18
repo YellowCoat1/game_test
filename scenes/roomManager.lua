@@ -77,7 +77,7 @@ function RoomManager.new()
         local vx = 0
         local vy = 0
 
-        if not inMenu and screenFade == -1 then
+        if not scenePaused then
             if love.keyboard.isDown("right") then
                 vx = 100*worldScale
                 player.rotation = 3
@@ -123,6 +123,7 @@ function RoomManager.new()
                 if roomLoaded then
                     if screenFade < 0 then
                         screenFade = -1
+                        scenePaused = false
                         isScreenFadeGoingUp = true
                     else
                         screenFade = screenFade - 1 * dt
@@ -136,7 +137,7 @@ function RoomManager.new()
 
     function objectCheck()
 
-        if not inMenu and screenFade == -1 then
+        if not scenePaused then
 
             local playerRotation = -(player.rotation * math.pi)/2
             local xFace =  math.sin(playerRotation)
@@ -180,6 +181,7 @@ function RoomManager.new()
     -- called when the player exits a room through a door or arch 
     function roomPlayerExit(room, ...)
         screenFade = 0
+        scenePaused = true
         local args = {...}
         screenFadeRoomLocation = args
         table.insert(screenFadeRoomLocation, 1, room)
