@@ -28,45 +28,13 @@ function love.load()
     player.collider:setFixedRotation(true)
     player.rotation = 0
 
-    
-
     inMenu = false
     screenManager.init(screens, "mainMenu")
-    --screenManager.registerCallbacks({"mousepressed", "draw", "update"})
-
 end
 
 function love.update(dt)
     world:update(dt)
     screenManager.update(dt)
-    local vx = 0
-    local vy = 0
-
-    if not inMenu then
-        if love.keyboard.isDown("right") then
-            vx = 100*worldScale
-            player.rotation = 3
-        end
-        if love.keyboard.isDown("left") then
-            vx = -100*worldScale
-            player.rotation = 1
-        end
-        if love.keyboard.isDown("up") then
-            vy = -100*worldScale
-            player.rotation = 0
-        end
-        if love.keyboard.isDown("down") then
-            vy = 100*worldScale
-            player.rotation = 2
-        end
-    end
-
-    local s = 1
-    player.collider:setLinearVelocity(vx*s, vy*s)
-
-    --cam:lookAt(player.x, player.y)
-    player.x = player.collider:getX()
-    player.y = player.collider:getY()
 end
 
 function love.draw()

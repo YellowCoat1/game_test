@@ -5,19 +5,12 @@ local MainScreen = {}
 function MainScreen.new()
     local self = Screen.new()
 
-    boundMap = sti("map/room2/room2.lua")
     map = sti("map/room2/room2.lua")
 
     
     table.insert(objects, {x = (32*3), y = (32*5) + 16, w = 32, h = 16, action = switchRoom, arguments = {"room1", "door1"}})
 
-    if boundMap.layers["bounds"] then
-        for i, obj in pairs(boundMap.layers["bounds"].objects) do
-            local bound = world:newRectangleCollider(obj.x*worldScale,obj.y*worldScale,obj.width*worldScale,obj.height*worldScale)
-            bound:setType("static")
-            table.insert(bounds, bound)
-        end
-    end
+    screenManager.publish("room_enter")
 
     function self:init(startPos)
         if startPos then

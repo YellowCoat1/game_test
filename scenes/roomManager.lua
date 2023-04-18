@@ -11,9 +11,11 @@ function RoomManager.new()
 
     objects = {}
 
+    interactables = {}
+
     function self:draw()
 
-        if not (map and boundMap) then return end
+        if not map then return end
 
         love.graphics.setBackgroundColor(0,0,0,1)
         love.graphics.push()
@@ -59,10 +61,38 @@ function RoomManager.new()
     end
 
     function self:update(dt)
-        
-        if map and boundMap then
+
+        local vx = 0
+        local vy = 0
+
+        if not inMenu then
+            if love.keyboard.isDown("right") then
+                vx = 100*worldScale
+                player.rotation = 3
+            end
+            if love.keyboard.isDown("left") then
+                vx = -100*worldScale
+                player.rotation = 1
+            end
+            if love.keyboard.isDown("up") then
+                vy = -100*worldScale
+                player.rotation = 0
+            end
+            if love.keyboard.isDown("down") then
+                vy = 100*worldScale
+                player.rotation = 2
+            end
+        end
+
+        local s = 1
+        player.collider:setLinearVelocity(vx*s, vy*s)
+
+        --cam:lookAt(player.x, player.y)
+        player.x = player.collider:getX()
+        player.y = player.collider:getY()
+            
+        if map then
             map:update(dt)
-            boundMap:update(dt)
         end
 
         if debugTimer.t > 0 then
@@ -111,13 +141,23 @@ function RoomManager.new()
             for i, bound in pairs(bounds) do
                 bound:destroy()
             end
-            boundMap = nil
             map = nil
             debugTimer.t = 0
         end
 
-        if message == "exit" then
-            -- do stuff
+        if message == "room_enter" then
+
+            if map.layers["bounds"] then
+                for i, obj in pairs(map.layers["bounds"].objects) do
+                    local bound = world:newRectangleCollider(obj.x*worldScale,obj.y*worldScale,obj.width*worldScale,obj.height*worldScale)
+                    bound:setType("static")
+                    table.insert(bounds, bound)
+                end
+            end
+
+            
+
+            
         end
     end
 
