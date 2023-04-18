@@ -10,6 +10,7 @@ function love.load()
         roomManager = require "scenes.roomManager",
         room1 = require "scenes.room1",
         room2 = require "scenes.room2",
+        room3 = require "scenes.room3",
         menu = require "scenes.menu"
     }
 

@@ -5,7 +5,7 @@ local MainScreen = {}
 function MainScreen.new()
     local self = Screen.new()
 
-    map = sti("map/room2/room2.lua")
+    map = sti("map/room3/room3.lua")
     
     screenManager.publish("room_enter")
 
@@ -24,6 +24,10 @@ function MainScreen.new()
 
     function self:draw()
         roomLoaded = true
+    end
+
+    function self:update()
+        
     end
 
     function self:keypressed(key)
