@@ -32,13 +32,15 @@ function RoomManager.new()
         map:drawLayer(map.layers["floors"])
         map:drawLayer(map.layers["walls"])
     
-        for i,val in ipairs(objects) do
-            love.graphics.rectangle("line", val.x, val.y, val.w, val.h)
-        end
+        if debug then
+            for i,val in ipairs(objects) do
+                love.graphics.rectangle("line", val.x, val.y, val.w, val.h)
+            end
 
 
-        if debugTimer.t > 0 then
-            love.graphics.rectangle("line", debugTimer.x, debugTimer.y, 32, 32)
+            if debugTimer.t > 0 then
+                love.graphics.rectangle("line", debugTimer.x, debugTimer.y, 32, 32)
+            end
         end
 
         -- reset map translation
@@ -165,12 +167,9 @@ function RoomManager.new()
                 end
             end
 
-            if map.layers["entrances"] then 
-                print("testA\n")
+            if map.layers["entrances"] then
                 for _,obj in pairs(map.layers["entrances"].objects) do
-                    print("testB " .. obj.name .."\n")
                     local entranceRotation = obj.properties.playerEnterRotation or 0
-                    if obj.name == "standardEnter" then print("test") end
                     table.insert(entrances, {x = obj.x*worldScale, y = obj.y*worldScale, rotation = entranceRotation, name = obj.name})
                 end
             end

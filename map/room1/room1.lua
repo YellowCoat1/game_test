@@ -10,7 +10,7 @@ return {
   tilewidth = 32,
   tileheight = 32,
   nextlayerid = 6,
-  nextobjectid = 17,
+  nextobjectid = 19,
   properties = {},
   tilesets = {
     {
@@ -103,7 +103,7 @@ return {
       encoding = "lua",
       data = {
         6, 7, 7, 7, 7, 7, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        30, 31, 176, 31, 31, 31, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        30, 31, 176, 31, 176, 31, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         54, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         54, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         54, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -208,7 +208,7 @@ return {
       objects = {
         {
           id = 15,
-          name = "door1",
+          name = "entrance1",
           type = "",
           shape = "rectangle",
           x = 80,
@@ -235,6 +235,19 @@ return {
           properties = {
             ["playerEnterRotation"] = 0
           }
+        },
+        {
+          id = 18,
+          name = "entrance2",
+          type = "",
+          shape = "rectangle",
+          x = 144,
+          y = 72,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     },
@@ -265,7 +278,23 @@ return {
           visible = true,
           properties = {
             ["roomExit"] = "room2",
-            ["roomExitDoorName"] = "door1"
+            ["roomExitDoorName"] = "entrance1"
+          }
+        },
+        {
+          id = 17,
+          name = "door2",
+          type = "",
+          shape = "rectangle",
+          x = 128,
+          y = 32,
+          width = 32,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["roomExit"] = "room2",
+            ["roomExitDoorName"] = "entrance2"
           }
         }
       }

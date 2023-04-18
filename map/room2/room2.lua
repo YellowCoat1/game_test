@@ -10,7 +10,7 @@ return {
   tilewidth = 32,
   tileheight = 32,
   nextlayerid = 6,
-  nextobjectid = 11,
+  nextobjectid = 15,
   properties = {},
   tilesets = {
     {
@@ -111,7 +111,23 @@ return {
           visible = true,
           properties = {
             ["roomExit"] = "room1",
-            ["roomExitDoorName"] = "door1"
+            ["roomExitDoorName"] = "entrance1"
+          }
+        },
+        {
+          id = 11,
+          name = "door2",
+          type = "",
+          shape = "rectangle",
+          x = 192,
+          y = 176,
+          width = 32,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["roomExit"] = "room1",
+            ["roomExitDoorName"] = "entrance2"
           }
         }
       }
@@ -132,10 +148,25 @@ return {
       objects = {
         {
           id = 9,
-          name = "door1",
+          name = "entrance1",
           type = "",
           shape = "rectangle",
           x = 112,
+          y = 168,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["playerEnterRotation"] = 0
+          }
+        },
+        {
+          id = 13,
+          name = "entrance2",
+          type = "",
+          shape = "rectangle",
+          x = 208,
           y = 168,
           width = 0,
           height = 0,
@@ -185,7 +216,7 @@ return {
         54, 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         77, 0, 0, 0, 0, 210, 211, 76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         54, 0, 0, 0, 0, 234, 235, 56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        78, 79, 10, 0, 9, 79, 79, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        78, 79, 10, 0, 9, 10, 0, 56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
