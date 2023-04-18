@@ -44,9 +44,10 @@ function MainScreen.new()
         if state == "bars about to shut" and timer == 0 then
             state = "bars just shut"
             barsShut = true
-            print("a")
             addBound(128, 48, 32, 256)
-            timer = 1.5
+            door_close = love.audio.newSource("door_close.mp3", "static")
+            love.audio.play(door_close)
+            timer = 2.5 
         end
 
         if state == "bars just shut" and timer == 0 then

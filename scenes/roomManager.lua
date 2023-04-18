@@ -164,7 +164,7 @@ function RoomManager.new()
             x, y = checkXPosition, checkYPosition
             w, h = 32, 32
 
-            debugTimer.t = 1
+            debugTimer.t = .5
 
             for i, obj in pairs(objects) do
                 if obj.locked == false and checkIfTwoBoxesIntersecting(x, y, w, h, obj.x, obj.y, obj.w, obj.h) then
@@ -214,7 +214,7 @@ function RoomManager.new()
         if message == "room_enter" then
 
             if map.layers["bounds"] then
-                for i, obj in pairs(map.layers["bounds"].objects) do
+                for _, obj in pairs(map.layers["bounds"].objects) do
                     local boundX = obj.x*worldScale
                     local boundY = obj.y*worldScale
                     local boundWidth = obj.width*worldScale
@@ -245,7 +245,6 @@ function RoomManager.new()
     end
 
     function addBound(x,y,w,h)
-        print("b")
         local bound = world:newRectangleCollider(x*worldScale, y*worldScale, w*worldScale, h*worldScale)
         bound.x, bound.y, bound.w, bound.h = x*worldScale, y*worldScale, w*worldScale, h*worldScale
         bound:setType("static")
