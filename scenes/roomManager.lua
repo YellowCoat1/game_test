@@ -130,6 +130,8 @@ function RoomManager.new()
                 end
             end
         end
+
+
     end
 
     function objectCheck()
@@ -152,7 +154,7 @@ function RoomManager.new()
             debugTimer.t = 1
 
             for i, obj in pairs(objects) do
-                if checkIfTwoBoxesIntersecting(x, y, w, h, obj.x, obj.y, obj.w, obj.h) then
+                if obj.locked == false and checkIfTwoBoxesIntersecting(x, y, w, h, obj.x, obj.y, obj.w, obj.h) then
                     obj.action(unpack(obj.arguments))
                 end
             end
@@ -208,7 +210,7 @@ function RoomManager.new()
 
             if map.layers["doors"] then
                 for _,obj in pairs(map.layers["doors"].objects) do
-                    table.insert(objects, {x = obj.x, y = obj.y, w = obj.width, h = obj.height, action = roomPlayerExit, arguments = {obj.properties.roomExit, obj.properties.roomExitDoorName}})
+                    table.insert(objects, {x = obj.x, y = obj.y, w = obj.width, h = obj.height, locked = false, name = obj.name, action = roomPlayerExit, arguments = {obj.properties.roomExit, obj.properties.roomExitDoorName}})
                 end
             end
 

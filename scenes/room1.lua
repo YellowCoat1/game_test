@@ -19,6 +19,7 @@ function MainScreen.new()
                 player.rotation = entrance.rotation
             end
         end
+
     end
 
     function self:draw()
@@ -26,6 +27,7 @@ function MainScreen.new()
     end
 
     function self:keypressed(key)
+
         if key == "escape" and screenFade == -1 then
             menuToggle()
         end

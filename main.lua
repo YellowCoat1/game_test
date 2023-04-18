@@ -13,8 +13,7 @@ function love.load()
         menu = require "scenes.menu"
     }
 
-    debug = false
-
+    debug = true
     
     world = windfield.newWorld(0,0)
 
