@@ -9,8 +9,13 @@ function RoomManager.new()
 
     debugTimer = {t = 0, x = 0, y = 0}
 
+    isScreenFadeGoingUp = true
+    screenFade = -1
+
     objects = {}
     entrances = {}
+
+    screenFadeRoomLocation = {}
 
     function self:draw()
 
@@ -49,6 +54,12 @@ function RoomManager.new()
         --draw the player
         love.graphics.draw(player.image, love.graphics.getWidth()/(worldScale*2), love.graphics.getHeight()/(worldScale*2), -(player.rotation * math.pi)/2, 1, 1, player.w/2, player.h/2)
 
+        if screenFade ~= -1 then
+            love.graphics.setColor(0, 0, 0, screenFade)
+            love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+            love.graphics.setColor(1,1,1,1)
+        end
+
         love.graphics.pop()
 
 
@@ -66,7 +77,7 @@ function RoomManager.new()
         local vx = 0
         local vy = 0
 
-        if not inMenu then
+        if not inMenu and screenFade == -1 then
             if love.keyboard.isDown("right") then
                 vx = 100*worldScale
                 player.rotation = 3
@@ -99,31 +110,52 @@ function RoomManager.new()
         if debugTimer.t > 0 then
             debugTimer.t = debugTimer.t - dt
         end
-    end
 
-    function objectCheck()
-        local playerRotation = -(player.rotation * math.pi)/2
-        local xFace =  math.sin(playerRotation)
-        local yFace = -math.cos(playerRotation)
-
-        local checkXPosition = (player.x/worldScale - player.w/2)+(xFace*32)
-        local checkYPosition = (player.y/worldScale - player.h/2)+(yFace*32)
-
-        debugTimer.x = checkXPosition
-        debugTimer.y = checkYPosition
-
-        x, y = checkXPosition, checkYPosition
-        w, h = 32, 32
-
-        debugTimer.t = 1
-
-        for i, obj in pairs(objects) do
-            if checkIfTwoBoxesIntersecting(x, y, w, h, obj.x, obj.y, obj.w, obj.h) then
-                obj.action(unpack(obj.arguments))
+        if screenFade > -1 then
+            if isScreenFadeGoingUp then
+                if screenFade > 1 then 
+                    isScreenFadeGoingUp = false 
+                    switchRoom(screenFadeRoomLocation[1], screenFadeRoomLocation[2])
+                else screenFade = screenFade + 1 * dt end
+            else
+                if screenFade < 0 then
+                    screenFade = -1
+                    isScreenFadeGoingUp = true
+                else
+                    screenFade = screenFade - 1 * dt
+                end
             end
         end
     end
 
+    function objectCheck()
+
+        if not inMenu and screenFade == -1 then
+
+            local playerRotation = -(player.rotation * math.pi)/2
+            local xFace =  math.sin(playerRotation)
+            local yFace = -math.cos(playerRotation)
+
+            local checkXPosition = (player.x/worldScale - player.w/2)+(xFace*32)
+            local checkYPosition = (player.y/worldScale - player.h/2)+(yFace*32)
+
+            debugTimer.x = checkXPosition
+            debugTimer.y = checkYPosition
+
+            x, y = checkXPosition, checkYPosition
+            w, h = 32, 32
+
+            debugTimer.t = 1
+
+            for i, obj in pairs(objects) do
+                if checkIfTwoBoxesIntersecting(x, y, w, h, obj.x, obj.y, obj.w, obj.h) then
+                    obj.action(unpack(obj.arguments))
+                end
+            end
+        end
+    end
+
+    -- called to switch between one room and another
     function switchRoom(room, ...)
         local args = (...)
         objects = {}
@@ -137,6 +169,15 @@ function RoomManager.new()
         screenManager.publish("roomExit")
         screenManager.pop()
         screenManager.push(room, args)
+    end
+
+    -- called when the player exits a room through a door or arch 
+    function roomPlayerExit(room, ...)
+        screenFade = 0
+        local args = {...}
+        screenFadeRoomLocation = args
+        table.insert(screenFadeRoomLocation, 1, room)
+        --switchRoom(room, ...)
     end
 
     function self:receive(message)
@@ -163,7 +204,7 @@ function RoomManager.new()
 
             if map.layers["doors"] then
                 for _,obj in pairs(map.layers["doors"].objects) do
-                    table.insert(objects, {x = obj.x, y = obj.y, w = obj.width, h = obj.height, action = switchRoom, arguments = {obj.properties.roomExit, obj.properties.roomExitDoorName}})
+                    table.insert(objects, {x = obj.x, y = obj.y, w = obj.width, h = obj.height, action = roomPlayerExit, arguments = {obj.properties.roomExit, obj.properties.roomExitDoorName}})
                 end
             end
 

@@ -22,7 +22,7 @@ function MainScreen.new()
     end
 
     function self:keypressed(key)
-        if key == "escape" then
+        if key == "escape" and screenFade == -1 then
             menuToggle()
         end
         if key == "e" then
