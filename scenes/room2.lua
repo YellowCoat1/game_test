@@ -7,9 +7,6 @@ function MainScreen.new()
 
     map = sti("map/room2/room2.lua")
 
-    
-    table.insert(objects, {x = (32*3), y = (32*5) + 16, w = 32, h = 16, action = switchRoom, arguments = {"room1", "door1"}})
-
     screenManager.publish("room_enter")
 
     function self:init(startPos)

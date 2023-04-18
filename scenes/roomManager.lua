@@ -11,8 +11,6 @@ function RoomManager.new()
 
     objects = {}
 
-    interactables = {}
-
     function self:draw()
 
         if not map then return end
@@ -142,6 +140,7 @@ function RoomManager.new()
                 bound:destroy()
             end
             map = nil
+            objects = {}
             debugTimer.t = 0
         end
 
@@ -155,9 +154,19 @@ function RoomManager.new()
                 end
             end
 
-            
 
-            
+            if map.layers["interactables"] then
+
+                for _,obj in pairs(map.layers["interactables"].objects) do
+
+                    if obj.type == "door" then
+                        print(obj.x)
+                        table.insert(objects, {x = obj.x, y = obj.y, w = obj.width, h = obj.height, action = switchRoom, arguments = {obj.properties.roomExit, obj.properties.roomExitDoorName}})
+                        --table.insert(objects, {x = (32*3), y = (32*5) + 16, w = 32, h = 16, action = switchRoom, arguments = {"room1", "door1"}})
+                    end
+
+                end
+            end
         end
     end
 

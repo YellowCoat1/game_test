@@ -110,10 +110,9 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["doorID"] = 1,
             ["enterDir"] = 0,
             ["roomExit"] = "room1",
-            ["roomExitDoorID"] = 1
+            ["roomExitDoorName"] = "door1"
           }
         }
       }

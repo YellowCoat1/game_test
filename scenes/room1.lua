@@ -4,11 +4,11 @@ local MainScreen = {}
 
 function MainScreen.new()
     local self = Screen.new()
-    
+
     map = sti("map/room1/room1.lua")
 
 
-    table.insert(objects, {x = (32*2), y = (32*1), w = 32, h = 16, action = switchRoom, arguments = {"room2", "door1"}})
+    --table.insert(objects, {x = (32*2), y = (32*1), w = 32, h = 16, action = switchRoom, arguments = {"room2", "door1"}})
 
     screenManager.publish("room_enter")
     
