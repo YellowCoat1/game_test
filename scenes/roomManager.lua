@@ -36,16 +36,28 @@ function RoomManager.new()
         -- draw the map
         map:drawLayer(map.layers["floors"])
         map:drawLayer(map.layers["walls"])
+
+        if roomDraw then
+            roomDraw()
+        end
     
         if debug then
+
+            love.graphics.setColor(0, 0, 1)
+            for i,bound in ipairs(bounds) do
+                love.graphics.rectangle("line", bound.x/worldScale, bound.y/worldScale, bound.w/worldScale, bound.h/worldScale)
+            end
+
+            love.graphics.setColor(0,1,0)
             for i,val in ipairs(objects) do
                 love.graphics.rectangle("line", val.x, val.y, val.w, val.h)
             end
 
-
+            love.graphics.setColor(1,0,0)
             if debugTimer.t > 0 then
                 love.graphics.rectangle("line", debugTimer.x, debugTimer.y, 32, 32)
             end
+            love.graphics.setColor(1,1,1)
         end
 
         -- reset map translation
@@ -203,7 +215,12 @@ function RoomManager.new()
 
             if map.layers["bounds"] then
                 for i, obj in pairs(map.layers["bounds"].objects) do
-                    local bound = world:newRectangleCollider(obj.x*worldScale,obj.y*worldScale,obj.width*worldScale,obj.height*worldScale)
+                    local boundX = obj.x*worldScale
+                    local boundY = obj.y*worldScale
+                    local boundWidth = obj.width*worldScale
+                    local boundHeight = obj.height*worldScale
+                    local bound = world:newRectangleCollider(boundX, boundY, boundWidth, boundHeight)
+                    bound.x, bound.y, bound.w, bound.h = boundX, boundY, boundWidth, boundHeight
                     bound:setType("static")
                     table.insert(bounds, bound)
                 end
@@ -225,6 +242,14 @@ function RoomManager.new()
 
         end
 
+    end
+
+    function addBound(x,y,w,h)
+        print("b")
+        local bound = world:newRectangleCollider(x*worldScale, y*worldScale, w*worldScale, h*worldScale)
+        bound.x, bound.y, bound.w, bound.h = x*worldScale, y*worldScale, w*worldScale, h*worldScale
+        bound:setType("static")
+        table.insert(bounds, bound)
     end
 
     return self
