@@ -63,6 +63,10 @@ function RoomManager.new()
         -- reset map translation
         love.graphics.translate(-mapTranslateX,-mapTranslateY)
 
+        if roomDrawUI then
+            roomDrawUI()
+        end
+
         --draw the player
         love.graphics.draw(player.image, love.graphics.getWidth()/(worldScale*2), love.graphics.getHeight()/(worldScale*2), -(player.rotation * math.pi)/2, 1, 1, player.w/2, player.h/2)
 

@@ -41,7 +41,7 @@ function mainMenu.new()
         local w = love.graphics.getWidth()
         local h = love.graphics.getHeight()
         if checkIfPointInBox(x, y, w*(1/16), h*(1/16), w*(1/4), h*(1/16)) then
-            switchScene("roomManager", "room3")
+            switchScene("roomManager", "room1")
         end
         if checkIfPointInBox(x, y, w*(1/16), h*(3/16), w*(1/4), h*(1/16)) then
             love.event.quit()

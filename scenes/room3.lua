@@ -34,6 +34,24 @@ function MainScreen.new()
         end
     end
 
+    function roomDrawUI()
+        if bossbar then
+            love.graphics.setColor(0,0,0,0.75)
+            love.graphics.rectangle("fill", 0,0,230,20)
+
+            love.graphics.setColor(1,1,1,1)
+            if not jkjk then
+                love.graphics.print("LORD ZYROTH, TAKER OF NEW SOULS")
+            else
+                love.graphics.print("jkjk")
+            end
+
+            love.graphics.setColor(1,0,0)
+            love.graphics.rectangle("fill", 0, 20,(love.graphics.getWidth()/1.3)/worldScale, love.graphics.getHeight()/(20*worldScale))
+            love.graphics.setColor(1,1,1)
+        end
+    end
+
     function self:update(dt)
         if state == "first entered" and player.x > 190*worldScale then
             state = "bars about to shut"
@@ -45,7 +63,7 @@ function MainScreen.new()
             state = "bars just shut"
             barsShut = true
             addBound(128, 48, 32, 256)
-            door_close = love.audio.newSource("door_close.mp3", "static")
+            local door_close = love.audio.newSource("door_close.mp3", "static")
             love.audio.play(door_close)
             timer = 2.5 
         end
@@ -53,6 +71,19 @@ function MainScreen.new()
         if state == "bars just shut" and timer == 0 then
             scenePaused = false
             state = "regular 2"
+        end
+
+        if state == "regular 2" and player.x > 300*worldScale then
+            bossbar = true
+            state = "BOSSBOSS"
+            boss_music = love.audio.newSource("BOSSBOSS.mp3","stream")
+            love.audio.play(boss_music)
+        end
+
+        if state == "BOSSBOSS" and player.x > 700*worldScale then
+            jkjk = true
+            love.audio.stop(boss_music)
+            state = "jkjk"
         end
 
         if timer > 0 then
