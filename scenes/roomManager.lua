@@ -111,18 +111,22 @@ function RoomManager.new()
             debugTimer.t = debugTimer.t - dt
         end
 
+        -- managing screen fade
         if screenFade > -1 then
             if isScreenFadeGoingUp then
                 if screenFade > 1 then 
                     isScreenFadeGoingUp = false 
                     switchRoom(screenFadeRoomLocation[1], screenFadeRoomLocation[2])
+                    roomLoaded = false
                 else screenFade = screenFade + 1 * dt end
             else
-                if screenFade < 0 then
-                    screenFade = -1
-                    isScreenFadeGoingUp = true
-                else
-                    screenFade = screenFade - 1 * dt
+                if roomLoaded then
+                    if screenFade < 0 then
+                        screenFade = -1
+                        isScreenFadeGoingUp = true
+                    else
+                        screenFade = screenFade - 1 * dt
+                    end
                 end
             end
         end

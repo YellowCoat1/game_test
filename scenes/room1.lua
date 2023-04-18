@@ -21,6 +21,10 @@ function MainScreen.new()
         end
     end
 
+    function self:draw()
+        roomLoaded = true
+    end
+
     function self:keypressed(key)
         if key == "escape" and screenFade == -1 then
             menuToggle()
