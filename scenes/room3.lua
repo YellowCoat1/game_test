@@ -12,7 +12,7 @@ function MainScreen.new()
 
     screenManager.publish("room_enter")
 
-    function self:init(startPos)   
+    function self:init(startPos)
         startPos = startPos or "standardEnter"
         for i,entrance in ipairs(entrances) do
             if entrance.name == startPos then
@@ -35,7 +35,11 @@ function MainScreen.new()
 
         if boss then
             if boss.state == "resting" then
-                love.graphics.draw(boss.animations.resting[boss.currentFrame], boss.x, boss.y, 0, 1, 1)
+                if not boss.animations.resting[boss.currentFrame] then
+                    print("TEST: " .. boss.currentFrame .. ", " .. inspect(boss.animations.resting[11]))
+                    print(inspect(boss.animations.resting))
+                end
+                love.graphics.draw(boss.animations.resting[boss.currentFrame], boss.x, boss.y, 0, 4, 4)
             end
         end
     end
@@ -104,7 +108,7 @@ function MainScreen.new()
                 boss.frameTimer = boss.frameTimer - dt
             else
                 boss.currentFrame = boss.currentFrame + 1
-                if boss.currentFrame > #boss.animations[boss.state] then boss.currentFrame = 0 end
+                if boss.currentFrame > #boss.animations[boss.state] then boss.currentFrame = 1 end
                 boss.frameTimer = 1 / boss.animationFPS
             end
         end
@@ -125,14 +129,26 @@ function MainScreen.new()
 
     bossFight = function()
         boss = {}
-        boss.x, boss.y = 1000*worldScale, (32*3+16)*worldScale
-        boss.animations.resting = {}
-        for _,obj in love.filesystem.getDirectoryItems("boss.resting") do
-            table.insert(boss.animations.resting, love.graphics.newImage("boss.resting." .. obj))
+        boss.x, boss.y = 100*worldScale, 100*worldScale
+        boss.animations = {}
+
+        for i,obj in ipairs(love.filesystem.getDirectoryItems("sprites/boss")) do
+            boss.animations[obj] = {}
         end
+
+        print(inspect(boss.animations))
+
+        for i,obj in ipairs(love.filesystem.getDirectoryItems("sprites/boss/resting")) do
+            local index = string.gsub(string.gsub(obj, "resting", ""), ".png", "")
+            print(inspect(boss.animations))
+            print(inspect)
+            boss.animations["resting"][tonumber(index)] = love.graphics.newImage("sprites/boss/resting/" .. obj)
+            print(inspect(boss.animations.resting))
+        end
+        
         boss.state = "resting"
-        boss.currentFrame = 0
-        boss.animationFPS = 3
+        boss.currentFrame = 1
+        boss.animationFPS = 10
         boss.frameTimer = 1 / boss.animationFPS
     end
 

@@ -14,7 +14,7 @@ function love.load()
         menu = require "scenes.menu"
     }
 
-    debug = false
+    debug = true
     
     world = windfield.newWorld(0,0)
 
@@ -22,11 +22,12 @@ function love.load()
 
     worldScale = 2
 
+    love.graphics.setDefaultFilter("nearest")
+
     player = {}
     player.x = 100
     player.y = 100
     player.image = love.graphics.newImage("player.png")
-    player.image:setFilter("nearest")
     player.w = player.image:getWidth()
     player.h = player.image:getHeight()
     player.collider = world:newRectangleCollider(150,100,player.w*worldScale,player.h*worldScale)
@@ -34,7 +35,11 @@ function love.load()
     player.rotation = 0
 
     inMenu = false
-    screenManager.init(screens, "mainMenu")
+    if debug then
+        screenManager.init(screens, "roomManager", "room3")
+    else
+        screenManager.init(screens, "mainMenu")
+    end
 end
 
 function love.update(dt)
