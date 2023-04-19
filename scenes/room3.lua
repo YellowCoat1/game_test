@@ -76,7 +76,7 @@ function MainScreen.new()
         if state == "regular 2" and player.x > 300*worldScale then
             bossbar = true
             state = "BOSSBOSS"
-            boss_music = love.audio.newSource("BOSSBOSS.mp3","stream")
+            boss_music = love.audio.newSource("BOSSBOSS.wav","stream")
             love.audio.play(boss_music)
         end
 
