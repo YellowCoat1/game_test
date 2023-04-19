@@ -83,7 +83,7 @@ function MainScreen.new()
         if state == "BOSSBOSS" and player.x > 700*worldScale then
             jkjk = true
             love.audio.stop(boss_music)
-            state = "jkjk"
+            state = "jk lol"
         end
 
         if timer > 0 then

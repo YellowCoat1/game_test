@@ -14,7 +14,7 @@ function love.load()
         menu = require "scenes.menu"
     }
 
-    debug = true
+    debug = false
     
     world = windfield.newWorld(0,0)
 
@@ -115,4 +115,15 @@ function round(input, place)
     local rounded = math.floor(inputTimes10ToThePowerOfPlace + .5)
     local dividedBy10ToThePowerOfPlace = rounded / (10^place)
     return(dividedBy10ToThePowerOfPlace)
+end
+
+function playerRotationToXY(rotation)
+    local playerRotation = -(rotation * math.pi)/2
+    local xFace =  math.sin(playerRotation)
+    local yFace = -math.cos(playerRotation)
+    return xFace, yFace
+end
+
+function playerRotationToRadians(rotation)
+    return -(rotation * math.pi)/2
 end

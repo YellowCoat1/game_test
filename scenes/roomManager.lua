@@ -5,8 +5,6 @@ local RoomManager = {}
 function RoomManager.new()
     local self = Screen.new()
 
-    player.image:setFilter("linear")
-
     debugTimer = {t = 0, x = 0, y = 0}
 
     isScreenFadeGoingUp = true
@@ -68,7 +66,7 @@ function RoomManager.new()
         end
 
         --draw the player
-        love.graphics.draw(player.image, love.graphics.getWidth()/(worldScale*2), love.graphics.getHeight()/(worldScale*2), -(player.rotation * math.pi)/2, 1, 1, player.w/2, player.h/2)
+        love.graphics.draw(player.image, love.graphics.getWidth()/(worldScale*2), love.graphics.getHeight()/(worldScale*2), playerRotationToRadians(player.rotation), 1, 1, player.w/2, player.h/2)
 
         if screenFade ~= -1 then
             love.graphics.setColor(0, 0, 0, screenFade)
@@ -93,24 +91,29 @@ function RoomManager.new()
         local vx = 0
         local vy = 0
 
+        local speed = 100
+
         if not scenePaused then
-            if love.keyboard.isDown("right") then
-                vx = 100*worldScale
-                player.rotation = 3
+            if love.keyboard.isDown("right") or love.keyboard.isDown("d") then
+                vx = vx + speed * worldScale
             end
-            if love.keyboard.isDown("left") then
-                vx = -100*worldScale
-                player.rotation = 1
+            if love.keyboard.isDown("left") or love.keyboard.isDown("a")then
+                vx = vx - speed * worldScale
             end
-            if love.keyboard.isDown("up") then
-                vy = -100*worldScale
-                player.rotation = 0
+            if love.keyboard.isDown("up") or love.keyboard.isDown("w")then
+                vy = vy - speed * worldScale
             end
-            if love.keyboard.isDown("down") then
-                vy = 100*worldScale
-                player.rotation = 2
+            if love.keyboard.isDown("down") or love.keyboard.isDown("s")then
+                vy = vy + 100 * worldScale
             end
         end
+
+        if vy > 0 then player.rotation = 2
+        elseif  vy < 0 then player.rotation = 0 end
+        if vx > 0 then player.rotation = 3
+        elseif vx < 0 then player.rotation = 1 end
+
+
 
         local s = 1
         player.collider:setLinearVelocity(vx*s, vy*s)
@@ -155,9 +158,7 @@ function RoomManager.new()
 
         if not scenePaused then
 
-            local playerRotation = -(player.rotation * math.pi)/2
-            local xFace =  math.sin(playerRotation)
-            local yFace = -math.cos(playerRotation)
+            local xFace, yFace = playerRotationToXY(player.rotation)
 
             local checkXPosition = (player.x/worldScale - player.w/2)+(xFace*32)
             local checkYPosition = (player.y/worldScale - player.h/2)+(yFace*32)
@@ -212,6 +213,9 @@ function RoomManager.new()
             map = nil
             objects = {}
             entrances = {}
+            -- clear roomDraw and roomDrawUI functions 
+            roomDraw = function() end
+            roomDrawUI = function () end 
             debugTimer.t = 0
         end
 
