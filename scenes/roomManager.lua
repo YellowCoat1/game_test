@@ -12,14 +12,18 @@ function RoomManager.new()
 
     objects = {}
     entrances = {}
+    eventTriggers = {}
 
     screenFadeRoomLocation = {}
+
+    
 
     function self:draw()
 
         if not map then return end
 
-        love.graphics.setBackgroundColor(0,0,0,1)
+        
+        love.graphics.setBackgroundColor(47/255,40/255,58/255,1)
         love.graphics.push()
 
         -- scale up
@@ -32,6 +36,7 @@ function RoomManager.new()
         love.graphics.translate(round(mapTranslateX, roundTo), round(mapTranslateY, roundTo))
 
         -- draw the map
+        
         map:drawLayer(map.layers["floors"])
         map:drawLayer(map.layers["walls"])
 
@@ -130,6 +135,17 @@ function RoomManager.new()
             debugTimer.t = debugTimer.t - dt
         end
 
+        local toRemove = {}
+        -- iterating through eventTriggers backwards
+        for i = #eventTriggers, 1, -1 do
+            print(i, inspect(eventTriggers))
+            local obj = eventTriggers[i]
+            if checkIfTwoBoxesIntersecting(player.x, player.y, player.width, player.height, obj.x, obj.y, obj.w, obj.h) then
+                obj.toCall()
+                table.remove(eventTriggers, i)
+            end
+        end
+
         -- managing screen fade
         if screenFade > -1 then
             if isScreenFadeGoingUp then
@@ -205,6 +221,14 @@ function RoomManager.new()
         --switchRoom(room, ...)
     end
 
+    function self:mousePressed(mouseX, mouseY)
+
+        if not scenePaused then
+            local angleFromPlayerToMouse = math.atan2(mouseY - player.y, mouseX - player.x) 
+            swordSwipe = {timer = 0.1, angle = angleFromPlayerToMouse}
+        end
+    end
+
     function self:receive(message)
         if message == "roomExit" or message == "exit" then
             for i, bound in pairs(bounds) do
@@ -245,6 +269,12 @@ function RoomManager.new()
                 for _,obj in pairs(map.layers["entrances"].objects) do
                     local entranceRotation = obj.properties.playerEnterRotation or 0
                     table.insert(entrances, {x = obj.x*worldScale, y = obj.y*worldScale, rotation = entranceRotation, name = obj.name})
+                end
+            end
+
+            if map.layers["eventTriggers"] then
+                for _,obj in pairs(map.layers["eventTriggers"].objects) do 
+                    table.insert(eventTriggers, {x = obj.x, y = obj.y, w = obj.width, h = obj.height, functionCall = obj.properties.toCall})
                 end
             end
 
