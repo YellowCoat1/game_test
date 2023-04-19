@@ -150,7 +150,7 @@ function RoomManager.new()
         if screenFade > -1 then
             if isScreenFadeGoingUp then
                 if screenFade > 1 then 
-                    isScreenFadeGoingUp = false 
+                    isScreenFadeGoingUp = false
                     switchRoom(screenFadeRoomLocation[1], screenFadeRoomLocation[2])
                     roomLoaded = false
                 else screenFade = screenFade + 1 * dt end

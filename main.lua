@@ -26,6 +26,7 @@ function love.load()
     player.x = 100
     player.y = 100
     player.image = love.graphics.newImage("player.png")
+    player.image:setFilter("nearest")
     player.w = player.image:getWidth()
     player.h = player.image:getHeight()
     player.collider = world:newRectangleCollider(150,100,player.w*worldScale,player.h*worldScale)

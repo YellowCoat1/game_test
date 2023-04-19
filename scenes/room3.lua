@@ -32,6 +32,12 @@ function MainScreen.new()
         if barsShut then
             map:drawTileLayer("bars")
         end
+
+        if boss then
+            if boss.state == "resting" then
+                love.graphics.draw(boss.animations.resting[boss.currentFrame], boss.x, boss.y, 0, 1, 1)
+            end
+        end
     end
 
     function roomDrawUI()
@@ -78,6 +84,7 @@ function MainScreen.new()
             state = "BOSSBOSS"
             boss_music = love.audio.newSource("BOSSBOSS.wav","stream")
             love.audio.play(boss_music)
+            bossFight()
         end
 
         if state == "BOSSBOSS" and player.x > 700*worldScale then
@@ -90,6 +97,16 @@ function MainScreen.new()
             timer = timer - dt
         else 
             timer = 0
+        end
+
+        if boss then
+            if boss.frameTimer > 0 then
+                boss.frameTimer = boss.frameTimer - dt
+            else
+                boss.currentFrame = boss.currentFrame + 1
+                if boss.currentFrame > #boss.animations[boss.state] then boss.currentFrame = 0 end
+                boss.frameTimer = 1 / boss.animationFPS
+            end
         end
 
     end
@@ -106,7 +123,22 @@ function MainScreen.new()
 
     end
 
+    bossFight = function()
+        boss = {}
+        boss.x, boss.y = 1000*worldScale, (32*3+16)*worldScale
+        boss.animations.resting = {}
+        for _,obj in love.filesystem.getDirectoryItems("boss.resting") do
+            table.insert(boss.animations.resting, love.graphics.newImage("boss.resting." .. obj))
+        end
+        boss.state = "resting"
+        boss.currentFrame = 0
+        boss.animationFPS = 3
+        boss.frameTimer = 1 / boss.animationFPS
+    end
+
     return self
 end
+
+
 
 return MainScreen

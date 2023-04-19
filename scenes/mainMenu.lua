@@ -6,7 +6,6 @@ function mainMenu.new()
     local self = Screen.new()
 
     love.graphics.setBackgroundColor(0,153/255,33/255)
-    player.image:setFilter("nearest")
 
     function self:update(dt)
 
