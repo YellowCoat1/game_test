@@ -58,7 +58,7 @@ function RoomManager.new()
                 love.graphics.rectangle("line", val.x, val.y, val.w, val.h)
             end
 
-            for i,entity in ipairs(entities) do
+            for i,entity in pairs(entities) do
                 love.graphics.rectangle("line", (entity.x * worldScale) - entity.w/2, (entity.y*worldScale) - entity.h, entity.w, entity.h)
             end
 
@@ -83,7 +83,7 @@ function RoomManager.new()
         love.graphics.translate(mapTranslateX,mapTranslateY)
 
 
-        for _,entity in ipairs(entities) do
+        for _,entity in pairs(entities) do
             entity:draw()
         end
 
@@ -110,7 +110,7 @@ function RoomManager.new()
 
     function self:update(dt)
 
-        for _,entity in ipairs(entities) do
+        for _,entity in pairs(entities) do
             entity:update(dt)
         end
         

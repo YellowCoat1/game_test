@@ -44,8 +44,12 @@ function love.load()
 end
 
 function love.update(dt)
-    world:update(dt)
-    screenManager.update(dt)
+    if not everythingPaused then
+        world:update(dt)
+        screenManager.update(dt)
+    else
+        if everythingPausedScript then everythingPausedScript() end
+    end
 end
 
 function love.draw()

@@ -64,8 +64,12 @@ function Entity:update(dt)
     end
 
     if self.currentAnimation == "chasing" then
-
+        self:chasingUpdateScript(dt)
     end
+
+end
+
+function Entity:chasingUpdateScript(dt)
 
 end
 
@@ -81,8 +85,7 @@ end
 
 function Entity:nextState()
     if self.state == "resting" then
-        local distance = calculateDistance(player.x, player.y, self.x*self.scale, self.y*self.scale)
-        if distance < 400 then
+        if self:alertRequirement() then
             self.state = "alert"
         end
     
@@ -90,20 +93,28 @@ function Entity:nextState()
         self.state = "chasingWindup"
     elseif self.state == "chasingWindup" then
         self.state = "chasing"
-        self.bound:destroy()
+        self:chasingScript()
     end
+end
+
+function Entity:alertRequirement()
+    local distance = calculateDistance(player.x, player.y, self.x*self.scale, self.y*self.scale)
+    return distance < 400
 end
 
 function Entity:draw()
     local savedRed,savedGreen,savedBlue = love.graphics.getColor()
     if self.beingDamaged then love.graphics.setColor(1,0,0) end
-    print(self.currentAnimation, self.frame)
     local currentFrame = self.animations[self.currentAnimation][self.frame]
     local flipFactor = 1
     if self.flipped == true then flipFactor = -1 end
     love.graphics.draw(currentFrame, self.x*worldScale, self.y*worldScale, 0, self.scale * flipFactor, self.scale, currentFrame:getWidth()/2, currentFrame:getHeight())
     
     love.graphics.setColor(savedRed, savedGreen, savedBlue)
+end
+
+function Entity:chasingScript()
+
 end
 
 function Entity:setState(state)

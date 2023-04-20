@@ -33,7 +33,6 @@ function MainScreen.new()
         if barsShut then
             map:drawTileLayer("bars")
         end
-
     end
 
     function roomDrawUI()
@@ -52,9 +51,15 @@ function MainScreen.new()
             love.graphics.rectangle("fill", 0, 20,(love.graphics.getWidth()/1.3)/worldScale, love.graphics.getHeight()/(20*worldScale))
             love.graphics.setColor(1,1,1)
         end
+
+        if gameOver then
+            love.graphics.setColor(1,0,0)
+        end
+
     end
 
     function self:update(dt)
+
         if state == "first entered" and player.x > 190*worldScale then
             state = "bars about to shut"
             timer = 1
@@ -76,17 +81,25 @@ function MainScreen.new()
         end
 
         if state == "regular 2" and player.x > 300*worldScale then
-            bossbar = true
             state = "BOSSBOSS"
             boss_music = love.audio.newSource("BOSSBOSS.wav","stream")
             --love.audio.play(boss_music)
             bossFight()
         end
 
-        if state == "BOSSBOSS" and player.x > 700*worldScale then
-            jkjk = true
-            --love.audio.stop(boss_music)
-            state = "jk lol"
+        if state == "BOSSBOSS" and player.x > 450*worldScale then
+            state = "seen him"
+            scenePaused = true
+        end
+
+        if state == "seen him" and unpausePlayer then
+            scenePaused = false
+            state = "hes coming"
+        end
+
+        if gameOverTimer then
+            gameOverTimer = gameOverTimer - dt
+            if gameOverTimer < 0 then love.event.quit() end
         end
 
         if timer > 0 then
@@ -110,7 +123,46 @@ function MainScreen.new()
     end
 
     bossFight = function()
-        table.insert(entities, entity("Lord Zyroth", 10, 300, 100, 8, 20, "/sprites/boss", 10, 4))
+        entities["Lord Zyroth"] = entity("Lord Zyroth", 10, 300, 100, 8, 20, "/sprites/boss", 10, 4)
+        entities["Lord Zyroth"].chasingScript = function(self) 
+            self.bound:destroy()
+            unpausePlayer = true
+        end
+        entities["Lord Zyroth"].chasingUpdateScript = function(self, dt)
+            
+            if not gameOver then
+
+                local angleBetweenZyrothAndThePlayer = math.atan2(self.y*self.scale - player.y, self.x*self.scale - player.x)
+                
+                if player.x < self.x*self.scale then
+                    self.flipped = false
+                else
+                    self.flipped = true
+                end
+
+                local speed = 50
+
+                local xMovement = -math.cos(angleBetweenZyrothAndThePlayer)
+                local yMovement = -math.sin(angleBetweenZyrothAndThePlayer)
+
+                self.x = self.x + speed * dt * xMovement
+                self.y = self.y + speed * dt * yMovement
+
+                local distanceBetweenZyrothAndThePlayer = calculateDistance(self.x * self.scale, self.y * self.scale, player.x, player.y)
+
+                if distanceBetweenZyrothAndThePlayer < 20 then 
+                    gameOver = true 
+                    gameOverTimer = 3
+                    scenePaused = true
+                end
+        
+            end
+
+        end
+        entities["Lord Zyroth"].alertRequirement = function(self)
+            return state == "seen him"
+        end
+
     end
 
     return self
