@@ -110,8 +110,7 @@ function MainScreen.new()
     end
 
     bossFight = function()
-        table.insert(entities, entity("Lord Zyroth", 10, 300, 100, "/sprites/boss", "resting", 10, 4))
-        print(entities[1])
+        table.insert(entities, entity("Lord Zyroth", 10, 300, 100, "/sprites/boss", 10, 4))
     end
 
     return self

@@ -134,3 +134,10 @@ end
 function playerRotationToRadians(rotation)
     return -(rotation * math.pi)/2
 end
+
+function calculateDistance(x1, y1, x2, y2)
+    local a = x2 - x1
+    local b = y2 - y1
+    local c = a^2 + b^2
+    return(math.sqrt(c))
+end
