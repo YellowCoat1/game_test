@@ -77,8 +77,6 @@ function Entity:destroy()
         self.deathFlag = true
     end
 end
-sd
-end
 
 function Entity:__tostring()
     return self.name
