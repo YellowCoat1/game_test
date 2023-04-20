@@ -42,10 +42,6 @@ function RoomManager.new()
         map:drawLayer(map.layers["floors"])
         map:drawLayer(map.layers["walls"])
 
-        for _,entity in ipairs(entities) do
-            entity:draw()
-        end
-
         if roomDraw then
             roomDraw()
         end
@@ -60,6 +56,10 @@ function RoomManager.new()
             love.graphics.setColor(0,1,0)
             for i,val in ipairs(objects) do
                 love.graphics.rectangle("line", val.x, val.y, val.w, val.h)
+            end
+
+            for i,entity in ipairs(entities) do
+                love.graphics.rectangle("line", (entity.x * worldScale) - entity.w/2, (entity.y*worldScale) - entity.h, entity.w, entity.h)
             end
 
             love.graphics.setColor(1,0,0)
@@ -78,6 +78,16 @@ function RoomManager.new()
 
         --draw the player
         love.graphics.draw(player.image, love.graphics.getWidth()/(worldScale*2), love.graphics.getHeight()/(worldScale*2), playerRotationToRadians(player.rotation), 1, 1, player.w/2, player.h/2)
+
+
+        love.graphics.translate(mapTranslateX,mapTranslateY)
+
+
+        for _,entity in ipairs(entities) do
+            entity:draw()
+        end
+
+        love.graphics.translate(-mapTranslateX,-mapTranslateY)
 
         if screenFade ~= -1 then
             love.graphics.setColor(0, 0, 0, screenFade)

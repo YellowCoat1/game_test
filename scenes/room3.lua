@@ -79,13 +79,13 @@ function MainScreen.new()
             bossbar = true
             state = "BOSSBOSS"
             boss_music = love.audio.newSource("BOSSBOSS.wav","stream")
-            love.audio.play(boss_music)
+            --love.audio.play(boss_music)
             bossFight()
         end
 
         if state == "BOSSBOSS" and player.x > 700*worldScale then
             jkjk = true
-            love.audio.stop(boss_music)
+            --love.audio.stop(boss_music)
             state = "jk lol"
         end
 
@@ -110,7 +110,7 @@ function MainScreen.new()
     end
 
     bossFight = function()
-        table.insert(entities, entity("Lord Zyroth", 10, 300, 100, "/sprites/boss", 10, 4))
+        table.insert(entities, entity("Lord Zyroth", 10, 300, 100, 8, 20, "/sprites/boss", 10, 4))
     end
 
     return self
