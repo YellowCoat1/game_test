@@ -21,7 +21,8 @@ function MainScreen.new()
                 player.rotation = entrance.rotation
             end
         end
-        addBound(1,1,1,1)
+        
+        Entity = require("classes.Entity")
     end
 
     function self:draw()
@@ -33,15 +34,6 @@ function MainScreen.new()
             map:drawTileLayer("bars")
         end
 
-        if boss then
-            if boss.state == "resting" then
-                if not boss.animations.resting[boss.currentFrame] then
-                    print("TEST: " .. boss.currentFrame .. ", " .. inspect(boss.animations.resting[11]))
-                    print(inspect(boss.animations.resting))
-                end
-                love.graphics.draw(boss.animations.resting[boss.currentFrame], boss.x, boss.y, 0, 4, 4)
-            end
-        end
     end
 
     function roomDrawUI()
@@ -103,16 +95,6 @@ function MainScreen.new()
             timer = 0
         end
 
-        if boss then
-            if boss.frameTimer > 0 then
-                boss.frameTimer = boss.frameTimer - dt
-            else
-                boss.currentFrame = boss.currentFrame + 1
-                if boss.currentFrame > #boss.animations[boss.state] then boss.currentFrame = 1 end
-                boss.frameTimer = 1 / boss.animationFPS
-            end
-        end
-
     end
 
     function self:keypressed(key)
@@ -128,28 +110,8 @@ function MainScreen.new()
     end
 
     bossFight = function()
-        boss = {}
-        boss.x, boss.y = 100*worldScale, 100*worldScale
-        boss.animations = {}
-
-        for i,obj in ipairs(love.filesystem.getDirectoryItems("sprites/boss")) do
-            boss.animations[obj] = {}
-        end
-
-        print(inspect(boss.animations))
-
-        for i,obj in ipairs(love.filesystem.getDirectoryItems("sprites/boss/resting")) do
-            local index = string.gsub(string.gsub(obj, "resting", ""), ".png", "")
-            print(inspect(boss.animations))
-            print(inspect)
-            boss.animations["resting"][tonumber(index)] = love.graphics.newImage("sprites/boss/resting/" .. obj)
-            print(inspect(boss.animations.resting))
-        end
-        
-        boss.state = "resting"
-        boss.currentFrame = 1
-        boss.animationFPS = 10
-        boss.frameTimer = 1 / boss.animationFPS
+        table.insert(entities, entity("Lord Zyroth", 10, 300, 100, "/sprites/boss", "resting", 10, 4))
+        print(entities[1])
     end
 
     return self

@@ -2,6 +2,7 @@ screenManager = require "lib.ScreenManager"
 sti = require "lib.sti"
 windfield = require "lib.windfield"
 inspect = require "lib.inspect"
+object = require "lib.classic.classic"
 
 function love.load()
 
@@ -22,7 +23,7 @@ function love.load()
 
     worldScale = 2
 
-    love.graphics.setDefaultFilter("nearest")
+    love.graphics.setDefaultFilter("nearest", "nearest")
 
     player = {}
     player.x = 100

@@ -14,6 +14,8 @@ function RoomManager.new()
     entrances = {}
     eventTriggers = {}
 
+    entities = {}
+
     screenFadeRoomLocation = {}
 
     
@@ -39,6 +41,10 @@ function RoomManager.new()
         
         map:drawLayer(map.layers["floors"])
         map:drawLayer(map.layers["walls"])
+
+        for _,entity in ipairs(entities) do
+            entity:draw()
+        end
 
         if roomDraw then
             roomDraw()
@@ -88,11 +94,16 @@ function RoomManager.new()
     bounds = {}
 
     function self:init(room)
+        entity = require "classes.Entity"
         screenManager.push(room)
     end
 
     function self:update(dt)
 
+        for _,entity in ipairs(entities) do
+            entity:update(dt)
+        end
+        
         local vx = 0
         local vy = 0
 
@@ -239,7 +250,7 @@ function RoomManager.new()
             entrances = {}
             -- clear roomDraw and roomDrawUI functions 
             roomDraw = function() end
-            roomDrawUI = function () end 
+            roomDrawUI = function () end
             debugTimer.t = 0
         end
 
