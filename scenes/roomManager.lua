@@ -5,6 +5,8 @@ local RoomManager = {}
 function RoomManager.new()
     local self = Screen.new()
 
+    drawingPaused = false
+
     debugTimer = {t = 0, x = 0, y = 0}
 
     isScreenFadeGoingUp = true
@@ -22,7 +24,7 @@ function RoomManager.new()
 
     function self:draw()
 
-        if not map then return end
+        if not map or drawingPaused then return end
 
         
         love.graphics.setBackgroundColor(47/255,40/255,58/255,1)
@@ -258,6 +260,9 @@ function RoomManager.new()
             map = nil
             objects = {}
             entrances = {}
+
+            entities = {}
+
             -- clear roomDraw and roomDrawUI functions 
             roomDraw = function() end
             roomDrawUI = function () end
@@ -289,7 +294,7 @@ function RoomManager.new()
             if map.layers["entrances"] then
                 for _,obj in pairs(map.layers["entrances"].objects) do
                     local entranceRotation = obj.properties.playerEnterRotation or 0
-                    table.insert(entrances, {x = obj.x*worldScale, y = obj.y*worldScale, rotation = entranceRotation, name = obj.name})
+                    table.insert(entrances, {x = obj.x*worldScale, y = obj.y*worldScale, name = obj.name, rotation = obj.properties.playerEnterRotation})
                 end
             end
 

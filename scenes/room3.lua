@@ -21,6 +21,8 @@ function MainScreen.new()
                 player.rotation = entrance.rotation
             end
         end
+
+        table.insert(objects, {x = 944, y = 168, w = 8, h = 16, locked = false, name = "pauseEntities", action = stopEntities, arguments = {}})
         
         Entity = require("classes.Entity")
     end
@@ -122,15 +124,19 @@ function MainScreen.new()
 
     end
 
+    function stopEntities()
+        entitiesStopped = true
+    end
+
     bossFight = function()
-        entities["Lord Zyroth"] = entity("Lord Zyroth", 10, 300, 100, 8, 20, "/sprites/boss", 10, 4)
+        entities["Lord Zyroth"] = entity("Lord Zyroth", 300, 100, 8, 20, "/sprites/boss", 10, 4)
         entities["Lord Zyroth"].chasingScript = function(self) 
             self.bound:destroy()
             unpausePlayer = true
         end
         entities["Lord Zyroth"].chasingUpdateScript = function(self, dt)
             
-            if not gameOver then
+            if not (gameOver or entitiesStopped or inMenu) then
 
                 local angleBetweenZyrothAndThePlayer = math.atan2(self.y*self.scale - player.y, self.x*self.scale - player.x)
                 

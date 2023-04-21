@@ -1,7 +1,7 @@
 Entity = object:extend()
 
 
-function Entity:new(name, health, x, y, w, h, animationDirectory, framesPerSecond, scale, speed)
+function Entity:new(name, x, y, w, h, animationDirectory, framesPerSecond, scale, speed)
 
     x = x or 0
     y = y or 0
@@ -10,7 +10,6 @@ function Entity:new(name, health, x, y, w, h, animationDirectory, framesPerSecon
     self.speed = speed or 10
     
     self.scale = scale or 1
-    self.health = health or 30
 
     self.state = "resting"
 

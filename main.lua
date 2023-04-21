@@ -12,6 +12,8 @@ function love.load()
         room1 = require "scenes.room1",
         room2 = require "scenes.room2",
         room3 = require "scenes.room3",
+        room4 = require "scenes.room4",
+        youWin = require "scenes.youWin",
         menu = require "scenes.menu"
     }
 
@@ -37,7 +39,7 @@ function love.load()
 
     inMenu = false
     if debug then
-        screenManager.init(screens, "roomManager", "room3")
+        screenManager.init(screens, "roomManager", "room4")
     else
         screenManager.init(screens, "mainMenu")
     end

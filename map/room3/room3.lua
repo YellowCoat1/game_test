@@ -9,8 +9,8 @@ return {
   height = 20,
   tilewidth = 32,
   tileheight = 32,
-  nextlayerid = 7,
-  nextobjectid = 23,
+  nextlayerid = 8,
+  nextobjectid = 26,
   properties = {},
   tilesets = {
     {
@@ -87,38 +87,6 @@ return {
     {
       type = "objectgroup",
       draworder = "topdown",
-      id = 4,
-      name = "doors",
-      class = "",
-      visible = true,
-      opacity = 1,
-      offsetx = 0,
-      offsety = 0,
-      parallaxx = 1,
-      parallaxy = 1,
-      properties = {},
-      objects = {
-        {
-          id = 6,
-          name = "door1",
-          type = "",
-          shape = "rectangle",
-          x = 8,
-          y = 168,
-          width = 8,
-          height = 16,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["roomExit"] = "room2",
-            ["roomExitDoorName"] = "entrance3"
-          }
-        }
-      }
-    },
-    {
-      type = "objectgroup",
-      draworder = "topdown",
       id = 5,
       name = "entrances",
       class = "",
@@ -185,7 +153,7 @@ return {
         54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56,
         54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56,
         54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56,
-        101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56,
+        101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100,
         54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56,
         54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56,
         54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56,
@@ -307,6 +275,85 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 7,
+      name = "interactables",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 25,
+          name = "stopGame",
+          type = "",
+          shape = "rectangle",
+          x = 944,
+          y = 168,
+          width = 8,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["toCall"] = "gameOver"
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 4,
+      name = "doors",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 6,
+          name = "door1",
+          type = "",
+          shape = "rectangle",
+          x = 8,
+          y = 168,
+          width = 8,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["roomExit"] = "room2",
+            ["roomExitDoorName"] = "entrance3"
+          }
+        },
+        {
+          id = 23,
+          name = "door2",
+          type = "",
+          shape = "rectangle",
+          x = 944,
+          y = 168,
+          width = 8,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["roomExit"] = "room4",
+            ["roomExitDoorName"] = "entrance1"
+          }
         }
       }
     }
