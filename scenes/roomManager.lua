@@ -114,8 +114,6 @@ function RoomManager.new()
 
     function self:update(dt)
 
-        print(scenePaused, inMenu)
-
         if not enemiesPaused then
             for _,entity in pairs(entities) do
                 entity:update(dt)

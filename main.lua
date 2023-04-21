@@ -51,6 +51,7 @@ function love.load()
 end
 
 function love.update(dt)
+
     if not everythingPaused then
         world:update(dt)
         screenManager.update(dt)
@@ -89,7 +90,6 @@ end
 whatWasScenePausedBefore = false
 
 function menuToggle()
-    print("menu toggle")
     if not inMenu then
         wasbackgroundMusicPlaying = background_music:isPlaying()
         wasclangPlaying = door_close:isPlaying()

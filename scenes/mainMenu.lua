@@ -37,7 +37,9 @@ function mainMenu.new()
 
         love.graphics.print("the adventures of face-man", w*(11/32), h*(1/32), 0, 3, 3)
 
-        love.graphics.draw(player.image, w*(5/8), h*(3/16), 0, 7, 7)
+        love.graphics.draw(player.image, w*(5/8), h*(1/8), 0, 7, 7)
+
+        love.graphics.print("hes beautiful", w*(3/4), h*(1/8) + player.image:getHeight() * 7)
 
         love.graphics.pop()
     end

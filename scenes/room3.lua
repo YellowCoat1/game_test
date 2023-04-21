@@ -42,21 +42,6 @@ function MainScreen.new()
     end
 
     function roomDrawUI()
-        if bossbar then
-            love.graphics.setColor(0,0,0,0.75)
-            love.graphics.rectangle("fill", 0,0,230,20)
-
-            love.graphics.setColor(1,1,1,1)
-            if not jkjk then
-                love.graphics.print("LORD ZYROTH, TAKER OF NEW SOULS")
-            else
-                love.graphics.print("jkjk")
-            end
-
-            love.graphics.setColor(1,0,0)
-            love.graphics.rectangle("fill", 0, 20,(love.graphics.getWidth()/1.3)/worldScale, love.graphics.getHeight()/(20*worldScale))
-            love.graphics.setColor(1,1,1)
-        end
 
         if gameOver then
             love.graphics.setColor(1,0,0)
