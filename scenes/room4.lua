@@ -51,6 +51,8 @@ function MainScreen.new()
 
     function self:update(dt)
 
+        enemiesPaused = false
+
        timer = 0
 
         if gameOverTimer then

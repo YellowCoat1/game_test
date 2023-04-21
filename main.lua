@@ -40,6 +40,8 @@ function love.load()
     background_music = love.audio.newSource("/backgroundMusic.wav", "stream")
     background_music:setLooping(true)
 
+    door_close = love.audio.newSource("door_close.mp3", "static")
+
     inMenu = false
     if debug then
         screenManager.init(screens, "roomManager", "room3")
@@ -84,15 +86,25 @@ function resetPlayer()
     player.x, player.y = 100, 100
 end
 
+whatWasScenePausedBefore = false
+
 function menuToggle()
+    print("menu toggle")
     if not inMenu then
+        wasbackgroundMusicPlaying = background_music:isPlaying()
+        wasclangPlaying = door_close:isPlaying()
+        background_music:pause()
+        door_close:pause()
+        whatWasScenePausedBefore = scenePaused
         screenManager.push("menu")
         inMenu = true
         scenePaused = true
     else
         screenManager.pop()
         inMenu = false
-        scenePaused = false
+        scenePaused = whatWasScenePausedBefore
+        if wasbackgroundMusicPlaying then background_music:play() end
+        if wasclangPlaying then door_close:play() end
     end
 
 end

@@ -10,6 +10,8 @@ function MainScreen.new()
     local timer = 0
     local state = "first entered"
 
+    local barsShut = false
+
     screenManager.publish("room_enter")
 
     function self:init(startPos)
@@ -64,6 +66,8 @@ function MainScreen.new()
 
     function self:update(dt)
 
+        enemiesPaused = false
+
         if state == "first entered" and player.x > 190*worldScale then
             state = "bars about to shut"
             timer = 1
@@ -74,7 +78,6 @@ function MainScreen.new()
             state = "bars just shut"
             barsShut = true
             addBound(128, 48, 32, 256)
-            local door_close = love.audio.newSource("door_close.mp3", "static")
             love.audio.play(door_close)
             timer = 2.5 
         end
@@ -106,10 +109,14 @@ function MainScreen.new()
             if gameOverTimer < 0 then love.event.quit() end
         end
 
-        if timer > 0 then
-            timer = timer - dt
-        else 
-            timer = 0
+        if not inMenu then
+
+            if timer > 0 then
+                timer = timer - dt
+            else 
+                timer = 0
+            end
+
         end
 
     end

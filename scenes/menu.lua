@@ -6,7 +6,8 @@ function menu.new()
     local self = Screen.new()
 
     function self:update(dt)
-
+        enemiesPaused = true
+        --scenePaused = true
     end
 
     function self:draw()
@@ -30,6 +31,7 @@ function menu.new()
         local w = love.graphics.getWidth()
         local h = love.graphics.getHeight()
         if checkIfPointInBox(x, y, w*(1/4), h*(1/16), w*(1/2), h*(1/8)) then
+            enemiesPaused = false
             menuToggle()
         end
         if checkIfPointInBox(x, y, w*(1/4), h*(1/4), w*(1/2), h*(1/8)) then
@@ -40,6 +42,7 @@ function menu.new()
 
     function self:keypressed(key)
         if key == "escape" then
+            enemiesPaused = false
             menuToggle()
         end
     end

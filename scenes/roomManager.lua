@@ -12,6 +12,8 @@ function RoomManager.new()
     isScreenFadeGoingUp = true
     screenFade = -1
 
+    enemiesPaused = false
+
     objects = {}
     entrances = {}
     eventTriggers = {}
@@ -112,9 +114,12 @@ function RoomManager.new()
 
     function self:update(dt)
 
-        print(scenePaused)
-        for _,entity in pairs(entities) do
-            entity:update(dt)
+        print(scenePaused, inMenu)
+
+        if not enemiesPaused then
+            for _,entity in pairs(entities) do
+                entity:update(dt)
+            end
         end
         
         local vx = 0

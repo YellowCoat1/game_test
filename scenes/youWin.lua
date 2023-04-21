@@ -24,11 +24,11 @@ function mainMenu.new()
             end
         end
 
-        if youWinTimer > 6 then
+        if youWinTimer > 5.5 then
             jklol = true
         end
 
-        if youWinTimer > 6.5 then
+        if youWinTimer > 6 then
             drawingPaused = false
             screenManager.pop()
         end

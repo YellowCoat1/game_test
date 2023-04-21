@@ -7,6 +7,10 @@ function mainMenu.new()
 
     love.graphics.setBackgroundColor(0,153/255,33/255)
 
+    scenePaused = false
+    inMenu = false
+
+
     function self:update(dt)
 
     end
@@ -31,7 +35,9 @@ function mainMenu.new()
         love.graphics.print("play", w*(1/16), h*(1/16), 0, 2.5, 2.5)
         love.graphics.print("quit", w*(1/16), h*(3/16), 0, 2.5, 2.5)
 
-        love.graphics.draw(player.image, w*(5/8), h*(1/16), 0, 7, 7)
+        love.graphics.print("the adventures of face-man", w*(11/32), h*(1/32), 0, 3, 3)
+
+        love.graphics.draw(player.image, w*(5/8), h*(3/16), 0, 7, 7)
 
         love.graphics.pop()
     end
