@@ -22,6 +22,8 @@ function MainScreen.new()
             end
         end
 
+        love.audio.stop(background_music)
+
         table.insert(objects, {x = 944, y = 168, w = 8, h = 16, locked = false, name = "pauseEntities", action = stopEntities, arguments = {}})
         
         Entity = require("classes.Entity")

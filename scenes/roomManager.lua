@@ -112,6 +112,7 @@ function RoomManager.new()
 
     function self:update(dt)
 
+        print(scenePaused)
         for _,entity in pairs(entities) do
             entity:update(dt)
         end

@@ -17,7 +17,7 @@ function love.load()
         menu = require "scenes.menu"
     }
 
-    debug = true
+    debug = false
     
     world = windfield.newWorld(0,0)
 
@@ -37,9 +37,12 @@ function love.load()
     player.collider:setFixedRotation(true)
     player.rotation = 0
 
+    background_music = love.audio.newSource("/backgroundMusic.wav", "stream")
+    background_music:setLooping(true)
+
     inMenu = false
     if debug then
-        screenManager.init(screens, "roomManager", "room4")
+        screenManager.init(screens, "roomManager", "room3")
     else
         screenManager.init(screens, "mainMenu")
     end

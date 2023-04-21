@@ -36,6 +36,9 @@ function mainMenu.new()
 
     function self:draw()
 
+        scenePaused = true
+        entitiesStopped = false
+        gameOver = false
         love.graphics.setColor(0,0,0)
         love.graphics.rectangle("fill",0,0,love.graphics.getWidth(), love.graphics.getHeight())
 
