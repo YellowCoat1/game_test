@@ -6,9 +6,6 @@ function MainScreen.new()
     local self = Screen.new()
 
     map = sti("map/room1/room1.lua")
-
-    background_music = love.audio.newSource("/backgroundMusic.wav", "stream")
-    background_music:setLooping(true)
     
     screenManager.publish("room_enter")
 
@@ -22,8 +19,6 @@ function MainScreen.new()
                 player.rotation = entrance.rotation
             end
         end
-
-        love.audio.play(background_music)
 
     end
 

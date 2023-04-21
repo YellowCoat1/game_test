@@ -48,6 +48,9 @@ function mainMenu.new()
         local w = love.graphics.getWidth()
         local h = love.graphics.getHeight()
         if checkIfPointInBox(x, y, w*(1/16), h*(1/16), w*(1/4), h*(1/16)) then
+            background_music = love.audio.newSource("/backgroundMusic.wav", "stream")
+            background_music:setLooping(true)
+            love.audio.play(background_music)
             switchScene("roomManager", "room1")
         end
         if checkIfPointInBox(x, y, w*(1/16), h*(3/16), w*(1/4), h*(1/16)) then
